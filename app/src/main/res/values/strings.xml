@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Totodo</string>
+    <string name="btn_create_task_text">Создать</string>
+</resources>
