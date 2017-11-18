@@ -9,6 +9,6 @@ import ru.bmstu.iu3.totodo.data.models.Task;
  */
 
 public interface MainPresenter {
-    void getAllTasks();
     void createTask();
+    void onSwipeTasks(int position);
 }

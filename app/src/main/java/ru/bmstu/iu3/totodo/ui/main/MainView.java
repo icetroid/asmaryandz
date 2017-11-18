@@ -8,7 +8,9 @@ import ru.bmstu.iu3.totodo.data.models.Task;
  * Created by Icetroid on 15.11.2017.
  */
 
-public interface MainView {
-    void setTasks(List<Task> tasks);
+public interface MainView
+{
     void openCreateTaskActivity();
+    void onSwipeTasks(int position);
+    void setPriorityTextView(String s);
 }

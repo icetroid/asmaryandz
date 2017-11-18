@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="main_upper_bar_height">40dp</dimen>
     <dimen name="create_task_btn_height">40dp</dimen>
     <dimen name="default_padding">10dp</dimen>
 </resources>

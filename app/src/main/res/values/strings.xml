@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Totodo</string>
-    <string name="btn_open_create_task_text">Создать</string>
+    <string name="btn_open_create_task_text">Добавить новую задачу</string>
     <string name="ed_task_text_label">Введите задачу...</string>
     <string name="btn_set_task_priority_text">ABCD</string>
     <string name="btn_set_task_date_text">Дата</string>
@@ -14,5 +14,8 @@
     <string name="priority_c">C</string>
     <string name="priority_d">D</string>
     <string name="btn_create_task_text">Создать</string>
+    <string name="tv_main_priority_default_text">Приоритет неизвестен</string>
+    <string name="tv_main_tasks_stats_default_text">Статистика не найдена</string>
+    <string name="tv_main_date_default_text">Дата неизвестна</string>
 
 </resources>

@@ -16,15 +16,13 @@ public class MainPresenterImpl implements MainPresenter {
         this.mainView = mainView;
     }
 
-    //TODO вернуть данные из БД
-    @Override
-    public void getAllTasks() {
-        List<Task> tasks = FakeDataUtils.getTasks(100);
-        mainView.setTasks(tasks);
-    }
-
     @Override
     public void createTask() {
         mainView.openCreateTaskActivity();
+    }
+
+    @Override
+    public void onSwipeTasks(int position) {
+        mainView.setPriorityTextView("Приоритет " + Task.Priority.getPriority(position));
     }
 }
