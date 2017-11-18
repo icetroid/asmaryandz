@@ -7,6 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ru.bmstu.iu3.totodo.R;
@@ -50,14 +54,20 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
     }
 
     public class TaskHolder extends RecyclerView.ViewHolder {
+        private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
         private TextView tvTitle;
+        private TextView tvDate;
+
         public TaskHolder(View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tv_rv_main_task_title);
+            tvDate = itemView.findViewById(R.id.tv_rv_main_task_date);
         }
 
         public void bind(Task task) {
             tvTitle.setText(task.getTitle());
+            tvDate.setText(dateFormat.format(task.getDate()));
         }
     }
 }

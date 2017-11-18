@@ -1,10 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.bmstu.iu3.totodo.ui.createTask.CreateTaskActivity">
+    android:orientation="vertical"
+    >
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/et_task_text"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="top"
+        android:hint="@string/ed_task_text_label"
+        android:inputType="textMultiLine"
+        android:selectAllOnFocus="false"
+        android:singleLine="false"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/create_task_btn_height"
+        android:orientation="horizontal"
+        android:layout_weight="0"
+        >
+
+        <Button
+            android:id="@+id/btn_set_task_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_set_task_priority_text"
+            />
+
+        <Button
+            android:id="@+id/btn_set_task_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_set_task_date_text"
+            />
+
+        <Button
+            android:id="@+id/btn_set_task_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_set_task_time_text"
+            />
+
+        <Button
+            android:id="@+id/btn_create_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_create_task_text"
+            android:onClick="createTask"
+            />
+    </LinearLayout>
+
+</LinearLayout>

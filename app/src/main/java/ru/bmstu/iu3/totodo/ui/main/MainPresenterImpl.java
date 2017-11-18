@@ -3,7 +3,7 @@ package ru.bmstu.iu3.totodo.ui.main;
 import java.util.List;
 
 import ru.bmstu.iu3.totodo.data.models.Task;
-import ru.bmstu.iu3.totodo.utils.FakeData;
+import ru.bmstu.iu3.totodo.utils.FakeDataUtils;
 
 /**
  * Created by Icetroid on 15.11.2017.
@@ -19,7 +19,7 @@ public class MainPresenterImpl implements MainPresenter {
     //TODO вернуть данные из БД
     @Override
     public void getAllTasks() {
-        List<Task> tasks = FakeData.getTasks(100);
+        List<Task> tasks = FakeDataUtils.getTasks(100);
         mainView.setTasks(tasks);
     }
 

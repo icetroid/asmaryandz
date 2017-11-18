@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
         rvTasks.setAdapter(tasksAdapter);
 
         //инициализация кнопки создания нового задания
-        btnCreateTask = findViewById(R.id.btn_create_task);
+        btnCreateTask = findViewById(R.id.btn_open_create_task);
         btnCreateTask.setOnClickListener(createTaskListener);
 
         presenter.getAllTasks();

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="priorities">
+        <item>@string/priority_a</item>
+        <item>@string/priority_b</item>
+        <item>@string/priority_c</item>
+        <item>@string/priority_d</item>
+    </array>
+
+</resources>

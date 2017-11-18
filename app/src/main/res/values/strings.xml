@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">Totodo</string>
+    <string name="btn_open_create_task_text">Создать</string>
+    <string name="ed_task_text_label">Введите задачу...</string>
+    <string name="btn_set_task_priority_text">ABCD</string>
+    <string name="btn_set_task_date_text">Дата</string>
+    <string name="btn_set_task_time_text">Время</string>
+    <string name="create_task_activity_label">Какое-то название</string>
+    <string name="main_activity_label">Какое-то название</string>
+    <string name="choose_priority_dialog_title">Выбрать приоритет</string>
+
+    <string name="priority_a">A</string>
+    <string name="priority_b">B</string>
+    <string name="priority_c">C</string>
+    <string name="priority_d">D</string>
     <string name="btn_create_task_text">Создать</string>
+
 </resources>
