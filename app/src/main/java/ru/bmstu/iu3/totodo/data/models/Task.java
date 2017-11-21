@@ -1,5 +1,7 @@
 package ru.bmstu.iu3.totodo.data.models;
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,10 +12,10 @@ import java.util.Date;
 
 public class Task
 {
+    private static final String TAG = "Task";
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     private long id;
-    private String title;
     private String text;
     private Priority priority;
     private Date date;
@@ -23,10 +25,9 @@ public class Task
 
     }
 
-    public Task(long id, String title, String text)
+    public Task(long id, String text)
     {
         this.id = id;
-        this.title = title;
         this.text = text;
     }
 
@@ -37,6 +38,12 @@ public class Task
 
     public void setPriority(Priority priority) {
         this.priority = priority;
+    }
+
+    public void setPriority(String priority)
+    {
+        Log.i(TAG, "Priority = " + priority);
+        this.priority = Priority.valueOf(priority);
     }
 
     public Date getDate() {
@@ -55,13 +62,6 @@ public class Task
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getText() {
         return text;
@@ -73,7 +73,7 @@ public class Task
 
     @Override
     public String toString() {
-        return String.format("id: %d, title: %s, priority: %s, due date: %s", getId(), getTitle(), getPriority(), dateFormat.format(date));
+        return String.format("id: %d, text: %s, priority: %s, due date: %s", getId(), getText(), getPriority(), dateFormat.format(date));
     }
 
     public enum Priority{

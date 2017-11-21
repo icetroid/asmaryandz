@@ -66,8 +66,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
         }
 
         public void bind(Task task) {
-            tvTitle.setText(task.getTitle());
-            tvDate.setText(dateFormat.format(task.getDate()));
+            tvTitle.setText(task.getText() + " "  + task.getDate() + " " + task.getPriority());
+//            tvDate.setText(dateFormat.format(task.getDate()));
         }
     }
 }

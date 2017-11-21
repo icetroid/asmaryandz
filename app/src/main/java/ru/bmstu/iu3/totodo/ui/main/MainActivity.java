@@ -14,8 +14,10 @@ import android.widget.TextView;
 import java.util.List;
 
 import ru.bmstu.iu3.totodo.R;
+import ru.bmstu.iu3.totodo.data.db.TaskDb;
 import ru.bmstu.iu3.totodo.data.models.Task;
 import ru.bmstu.iu3.totodo.ui.createTask.CreateTaskActivity;
+import ru.bmstu.iu3.totodo.utils.FakeDataUtils;
 
 public class MainActivity extends AppCompatActivity implements MainView{
 
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        presenter = new MainPresenterImpl(this);
+        presenter = new MainPresenterImpl(this, this);
 
         //инициализация кнопки создания нового задания
         btnCreateTask = findViewById(R.id.btn_open_create_task);
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
         tasksPagerAdapter = new TasksSlideAdapter(getSupportFragmentManager());
         vpTasks.setAdapter(tasksPagerAdapter);
         mSwipeTasksListener = new SwipeTasksListener(this);
+//        FakeDataUtils.insertTasksIntoDb(this, 100);
 
     }
 

@@ -1,5 +1,7 @@
 package ru.bmstu.iu3.totodo.ui.main;
 
+import android.content.Context;
+
 import java.util.List;
 
 import ru.bmstu.iu3.totodo.data.models.Task;
@@ -12,8 +14,10 @@ import ru.bmstu.iu3.totodo.utils.FakeDataUtils;
 public class MainPresenterImpl implements MainPresenter {
 
     private MainView mainView;
-    public MainPresenterImpl(MainView mainView){
+    private Context context;
+    public MainPresenterImpl(MainView mainView, Context context){
         this.mainView = mainView;
+        this.context = context;
     }
 
     @Override
