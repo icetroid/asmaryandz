@@ -36,7 +36,7 @@ public class TaskDb
     public long insertTask(Task task)
     {
         db = mTaskDbHelper.getWritableDatabase();
-
+//        Log.i(TAG, task.toString());
         String fullText = task.getText();
         String priority = String.valueOf(getPriorityId(task.getPriority()));
         Date date = task.getDate();
@@ -47,28 +47,38 @@ public class TaskDb
         contentValues.put(TaskEntry.COLUMN_DATE, formatDate);
 
         long row = db.insert(TaskEntry.TABLE_NAME, null, contentValues);
-        Log.i(TAG, "row added " + row);
+//        Log.i(TAG, "row added " + row);
         return row;
     }
 
-    public List<Task> getAllTasks()
+    public List<Task> getTasksWithPriority(Task.Priority priority)
+    {
+        String selection = PriorityEntry.TABLE_NAME + "." + PriorityEntry.COLUMN_PRIORITY + " = ?";
+        String[] selectionArgs = new String[]{priority.name()};
+        List<Task> tasks = getTasks(selection,selectionArgs, null,null,null);
+        return tasks;
+    }
+
+    public List<Task> getTasks(String selection, String[] selectionsArgs, String groupBy, String having, String orderBy)
     {
         db = mTaskDbHelper.getReadableDatabase();
         String[] projection = {
+                TaskEntry.TABLE_NAME + "." + TaskEntry._ID,
                 TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_FULL_TEXT,
                 TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_DATE,
                 PriorityEntry.TABLE_NAME + "." + PriorityEntry.COLUMN_PRIORITY
         };
         Cursor cursor = db.query(TaskEntry.TABLE_NAME + " LEFT OUTER JOIN " + PriorityEntry.TABLE_NAME + " ON " + TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_PRIORITY + "=" + PriorityEntry.TABLE_NAME + "." + PriorityEntry._ID,
-                projection, null, null, null, null, null);
+                projection, selection, selectionsArgs, groupBy, having, orderBy);
         List<Task> tasks = new LinkedList<>();
 
         while(cursor.moveToNext())
         {
             Task task = new Task();
-            String text = cursor.getString(0);
-            String date = cursor.getString(1);
-            String priority = cursor.getString(2);
+            long id = cursor.getLong(0);
+            String text = cursor.getString(1);
+            String date = cursor.getString(2);
+            String priority = cursor.getString(3);
 //            Log.i(TAG, "1 = " + cursor.getString(1) + " 2 = " + cursor.getString(2));
 //            String priority = cursor.getString(cursor.getColumnIndex())
             Date formatDate = null;
@@ -78,6 +88,7 @@ public class TaskDb
                 Log.e(TAG, e.getMessage());
 
             }
+            task.setId(id);
             task.setText(text);
             task.setPriority(priority);
             task.setDate(formatDate);
@@ -91,6 +102,12 @@ public class TaskDb
         return tasks;
 
 
+    }
+
+    public List<Task> getAllTasks()
+    {
+        List<Task> tasks = getTasks(null,null,null,null,null);
+        return tasks;
     }
 
     public void deleteAllTasks()

@@ -8,4 +8,5 @@ public interface CreateTaskView {
     void showChoosePriorityDialog();
     void showCalendarDialog();
     void showTimeDialog();
+    String getTaskText();
 }

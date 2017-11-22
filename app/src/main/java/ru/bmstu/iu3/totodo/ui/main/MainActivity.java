@@ -21,6 +21,7 @@ import ru.bmstu.iu3.totodo.utils.FakeDataUtils;
 
 public class MainActivity extends AppCompatActivity implements MainView{
 
+    private static final Task.Priority INITIAL_PAGE_PRIORITY = Task.Priority.A;
     private MainPresenter presenter;
 
     private Button btnCreateTask;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements MainView{
         mSwipeTasksListener = new SwipeTasksListener(this);
 //        FakeDataUtils.insertTasksIntoDb(this, 100);
 
+        vpTasks.setCurrentItem(INITIAL_PAGE_PRIORITY.getPriority());
+        onSwipeTasks(INITIAL_PAGE_PRIORITY.getPriority());
     }
 
     @Override

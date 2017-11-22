@@ -1,7 +1,10 @@
 package ru.bmstu.iu3.totodo.ui.createTask;
 
+import android.content.Context;
+
 import java.util.Date;
 
+import ru.bmstu.iu3.totodo.data.db.TaskDb;
 import ru.bmstu.iu3.totodo.data.models.Task;
 
 /**
@@ -11,9 +14,11 @@ import ru.bmstu.iu3.totodo.data.models.Task;
 public class CreateTaskPresenterImpl implements CreateTaskPresenter {
     private CreateTaskView createTaskView;
     private Task mTask;
+    private TaskDb mTaskDb;
 
-    public CreateTaskPresenterImpl(CreateTaskView createTaskView){
+    public CreateTaskPresenterImpl(CreateTaskView createTaskView, Context context){
         this.createTaskView = createTaskView;
+        mTaskDb = new TaskDb(context);
         mTask = new Task();
         mTask.setDate(new Date());
     }
@@ -33,6 +38,13 @@ public class CreateTaskPresenterImpl implements CreateTaskPresenter {
     public Date getDate()
     {
         return mTask.getDate();
+    }
+
+    @Override
+    public void createTask() {
+        String taskText = createTaskView.getTaskText();
+        mTask.setText(taskText);
+        mTaskDb.insertTask(mTask);
     }
 
     @Override

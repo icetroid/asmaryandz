@@ -9,11 +9,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.Calendar;
 import java.util.Date;
 
 import ru.bmstu.iu3.totodo.R;
+import ru.bmstu.iu3.totodo.data.models.Task;
 import ru.bmstu.iu3.totodo.ui.main.MainActivity;
 import ru.bmstu.iu3.totodo.utils.DialogUtils;
 
@@ -31,12 +33,14 @@ public class CreateTaskActivity extends AppCompatActivity implements CreateTaskV
     private Button btnSetDate;
     private Button btnSetTime;
 
+    private EditText etTaskText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_task);
 
-        presenter = new CreateTaskPresenterImpl(this);
+        presenter = new CreateTaskPresenterImpl(this, this);
 
         btnSetPriority = findViewById(R.id.btn_set_task_priority);
         btnSetPriority.setOnClickListener(mSetTaskPropertiesListener);
@@ -51,14 +55,19 @@ public class CreateTaskActivity extends AppCompatActivity implements CreateTaskV
         btnSetTime.setOnLongClickListener(mSetTaskPropertyLongListener);
 
         mDateTimePickListener = new DateTimePickListener(presenter);
+
+        etTaskText = findViewById(R.id.et_task_text);
     }
 
 
     public void createTask(View view){
-        Log.i(TAG, presenter.getTask().toString());
+//        Log.i(TAG, presenter.getTask().toString());
+        presenter.createTask();
         Intent intent = new Intent(CreateTaskActivity.this, MainActivity.class);
         startActivity(intent);
     }
+
+
 
     @Override
     public void showChoosePriorityDialog() {
@@ -84,6 +93,11 @@ public class CreateTaskActivity extends AppCompatActivity implements CreateTaskV
                 dateAndTime.get(Calendar.HOUR_OF_DAY),
                 dateAndTime.get(Calendar.MINUTE), true)
                 .show();
+    }
+
+    @Override
+    public String getTaskText() {
+        return etTaskText.getText().toString();
     }
 
     /**

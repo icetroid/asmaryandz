@@ -19,5 +19,5 @@ public interface CreateTaskPresenter {
     void chooseDate();
     Task getTask();
     Date getDate();
-
+    void createTask();
 }

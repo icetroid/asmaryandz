@@ -61,13 +61,13 @@ public class MainSlidePageFragment extends Fragment
 //        setTasks(FakeDataUtils.getTasks(100));
         TaskDb db = new TaskDb(getContext());
 //        FakeDataUtils.insertTasksIntoDb(getContext(), 100);
-//        db.deleteAllTasks();
-        setTasks(db.getAllTasks());
+//           db.deleteAllTasks();
+        setTasks(db.getTasksWithPriority(Task.Priority.getPriority(priority)));
         return rootView;
     }
 
     public void setTasks(List<Task> tasks) {
-        Log.i(TAG, "tasks size = " + tasks.size() + " tasks.get(0) " + tasks.get(0).toString());
+//        Log.i(TAG, "tasks size = " + tasks.size() + " tasks.get(0) " + tasks.get(0).toString());
         tasksAdapter.setTasks(tasks);
     }
 }
