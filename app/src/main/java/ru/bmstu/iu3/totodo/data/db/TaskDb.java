@@ -49,13 +49,31 @@ public class TaskDb
         long row = db.insert(TaskEntry.TABLE_NAME, null, contentValues);
 //        Log.i(TAG, "row added " + row);
         return row;
+
     }
 
-    public List<Task> getTasksWithPriority(Task.Priority priority)
+    public List<Task> getTasksWithPriorityOrderByDate(Task.Priority priority, boolean desc)
+    {
+        String order = TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_DATE;
+        if(desc)
+        {
+            order += " DESC";
+        }
+        List<Task> tasks = getTasksWithPriority(priority, order);
+        return tasks;
+    }
+
+    public List<Task> getTasksWithPriority(Task.Priority priority, String orderBy)
     {
         String selection = PriorityEntry.TABLE_NAME + "." + PriorityEntry.COLUMN_PRIORITY + " = ?";
         String[] selectionArgs = new String[]{priority.name()};
-        List<Task> tasks = getTasks(selection,selectionArgs, null,null,null);
+        List<Task> tasks = getTasks(selection,selectionArgs, null,null,orderBy);
+        return tasks;
+    }
+
+    public List<Task> getTasksWithPriorityNoOrder(Task.Priority priority)
+    {
+        List<Task> tasks = getTasksWithPriority(priority, null);
         return tasks;
     }
 

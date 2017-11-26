@@ -17,5 +17,12 @@
     <string name="tv_main_priority_default_text">Приоритет неизвестен</string>
     <string name="tv_main_tasks_stats_default_text">Статистика не найдена</string>
     <string name="tv_main_date_default_text">Дата неизвестна</string>
+    <string name="btn_sync_task_text">sync</string>
 
+    <string name="pref_ask_for_calendar_id_key">ask_for_calendar_id</string>
+    <string name="choose_calendar_id_title">Выберите календарь</string>
+    <string name="choose_calendar_id_ok">Выбрать</string>
+    <string name="choose_calendar_id_cancel">Отмена</string>
+    <string name="pref_calendar_id">pref_calendar_id</string>
+    <string name="cb_remember_calendar_id_text">Запомнить</string>
 </resources>

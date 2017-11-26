@@ -1,7 +1,9 @@
 package ru.bmstu.iu3.totodo.utils;
 
 import android.content.Context;
+import android.util.Log;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,15 +17,28 @@ import ru.bmstu.iu3.totodo.data.models.Task;
  */
 
 public class FakeDataUtils {
+    private static final String TAG = "FakeDataUtils";
+    private static final String LOREM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
     public static List<Task> getTasks(int length){
         List<Task> tasks = new LinkedList<>();
         for(int i = 0; i < length; i++){
-            Task task = new Task(i, "Text " + i);
-            task.setDate(new Date());
+            Task task = new Task();
+            task.setText(i + " " + LOREM);
             Random random = new Random();
             int priority = random.nextInt(Task.Priority.values().length);
             task.setPriority(Task.Priority.getPriority(priority));
+
+            Calendar cal = Calendar.getInstance();
+            int year = random.nextInt(10) + 2000;
+            int month = random.nextInt(10) + 1;
+            int day = random.nextInt(25) + 1;
+            int hour = random.nextInt(20) + 1;
+            int min = random.nextInt(50) + 1;
+            int sec = random.nextInt(50) + 1;
+            cal.set(year, month, day, hour, min, sec);
+            task.setDate(cal.getTime());
             tasks.add(task);
+//            Log.i(TAG, "Priority " + task.getPriority());
         }
 
         return tasks;

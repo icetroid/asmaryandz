@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="ask_for_calendar_id_default">true</bool>
+</resources>

@@ -3,4 +3,5 @@
     <dimen name="main_upper_bar_height">40dp</dimen>
     <dimen name="create_task_btn_height">40dp</dimen>
     <dimen name="default_padding">10dp</dimen>
+    <dimen name="main_task_item_button_size">35dp</dimen>
 </resources>

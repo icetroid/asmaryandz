@@ -1,26 +1,31 @@
 package ru.bmstu.iu3.totodo.ui.main;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
 import ru.bmstu.iu3.totodo.R;
 import ru.bmstu.iu3.totodo.data.db.TaskDb;
 import ru.bmstu.iu3.totodo.data.models.Task;
 import ru.bmstu.iu3.totodo.ui.createTask.CreateTaskActivity;
+import ru.bmstu.iu3.totodo.utils.CalendarUtils;
 import ru.bmstu.iu3.totodo.utils.FakeDataUtils;
 
 public class MainActivity extends AppCompatActivity implements MainView{
 
+    private static final String TAG = "MainActivity";
     private static final Task.Priority INITIAL_PAGE_PRIORITY = Task.Priority.A;
     private MainPresenter presenter;
 
@@ -80,8 +85,14 @@ public class MainActivity extends AppCompatActivity implements MainView{
     @Override
     public void openCreateTaskActivity()
     {
+        //TODO change back
         Intent intent = new Intent(MainActivity.this, CreateTaskActivity.class);
         startActivity(intent);
+//        Log.i(TAG, "create task");
+//        Task task = new Task();
+//        task.setDate(new Date());
+//        task.setText("sdfsdaf");
+//        CalendarUtils.insertTaskIntoCalendar(this, this, task, 2);
     }
 
     @Override
