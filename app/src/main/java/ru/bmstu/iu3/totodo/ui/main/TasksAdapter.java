@@ -32,7 +32,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
     private Context context;
     private Activity activity;
     public TasksAdapter(MainSlidePageFragment mainSlidePageFragment){
-        mTasksAdapterListener = new TasksAdapterListener(this, mainSlidePageFragment);
+        mTasksAdapterListener = new TasksAdapterListener(mainSlidePageFragment);
         this.context = context;
         this.activity = activity;
         this.mMainSlidePageFragment = mainSlidePageFragment;
@@ -40,7 +40,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
 
     public interface onClickListener
     {
-        void syncTask(int position);
+        void syncTask(Task task);
     }
 
 
@@ -103,7 +103,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
             switch(id)
             {
                 case R.id.btn_sync_task:
-                    mTasksAdapterListener.syncTask(getAdapterPosition());
+                    mTasksAdapterListener.syncTask(task);
                     break;
                 default:
                     Log.i(TAG, "no such id");

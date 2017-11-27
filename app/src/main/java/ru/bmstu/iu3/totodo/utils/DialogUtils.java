@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -16,9 +15,7 @@ import android.widget.RadioGroup;
 import java.util.Map;
 
 import ru.bmstu.iu3.totodo.R;
-import ru.bmstu.iu3.totodo.ui.main.CalendarIdRadioButtonListener;
-import ru.bmstu.iu3.totodo.ui.main.ChooseCalendarIdListener;
-import ru.bmstu.iu3.totodo.ui.main.ShowChooseCalendarIdInterface;
+import ru.bmstu.iu3.totodo.ui.chooseCalendar.ChooseCalendar;
 
 /**
  * Created by Icetroid on 17.11.2017.
@@ -32,7 +29,7 @@ public class DialogUtils {
         return dialog;
     }
 
-    public static Dialog makeChooseCalendarId(Context context, Activity activity, ShowChooseCalendarIdInterface showChooseCalendarIdInterface){
+    public static Dialog makeChooseCalendarId(Context context, Activity activity, ChooseCalendar chooseCalendar){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.choose_calendar_id_title);
 
@@ -49,20 +46,18 @@ public class DialogUtils {
             radioGroup.addView(button);
         }
 
-
-
-        radioGroup.setOnCheckedChangeListener(showChooseCalendarIdInterface.getRadioButtonListener());
+        radioGroup.setOnCheckedChangeListener(chooseCalendar);
         if(radioGroup.getChildCount() > 0)
         {
             radioGroup.check(radioGroup.getChildAt(0).getId());
         }
 
         CheckBox remember = choose_calendar_id_layout.findViewById(R.id.cb_remember_calendar_id);
-        remember.setOnCheckedChangeListener(showChooseCalendarIdInterface.getRememberListener());
+        remember.setOnCheckedChangeListener(chooseCalendar);
 
         builder.setView(choose_calendar_id_layout)
-                .setPositiveButton(R.string.choose_calendar_id_ok, showChooseCalendarIdInterface.getChooseCalendarIdListener())
-                .setNegativeButton(R.string.choose_calendar_id_cancel, showChooseCalendarIdInterface.getChooseCalendarIdListener());
+                .setPositiveButton(R.string.choose_calendar_id_ok, chooseCalendar)
+                .setNegativeButton(R.string.choose_calendar_id_cancel, chooseCalendar);
         AlertDialog dialog =  builder.create();
         return dialog;
     }
