@@ -1,44 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:background="@drawable/task_item_background"
     android:padding="@dimen/default_padding"
     >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/tv_rv_main_task_date"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+          />
 
-    <TextView
-        android:id="@+id/tv_rv_main_task_date"
-        android:layout_width="197dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="1dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tv_rv_main_task_title"
-        app:layout_constraintStart_toStartOf="@+id/tv_rv_main_task_title"/>
+        <TextView
+            android:id="@+id/tv_rv_main_task_title"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+      />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_rv_main_task_title"
-        android:layout_width="168dp"
-        android:layout_height="27dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_rv_main_task_date"
-        app:layout_constraintEnd_toStartOf="@+id/btn_sync_task"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <Button
+    <ImageButton
         android:id="@+id/btn_sync_task"
-        android:layout_width="@dimen/main_task_item_button_size"
-        android:layout_height="@dimen/main_task_item_button_size"
-        android:layout_marginEnd="8dp"
         android:text="@string/btn_sync_task_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="10dp"/>
-</android.support.constraint.ConstraintLayout>
+        android:background="@drawable/ic_choose_sync_calendar_on"
+        style="@style/rv_button"
+    />
+    <ImageButton
+        android:id="@+id/btn_detailed_task"
+        style="@style/rv_button"
+        android:text="@string/btn_sync_task_text"/>
+    <ImageButton
+        android:id="@+id/btn_delete_task"
+        android:text="@string/btn_sync_task_text"
+        style="@style/rv_button"
+        />
+    <!--<ImageButton-->
+        <!--android:id="@+id/btn_detailed_task"-->
+        <!--style="@style/rv_button"-->
+        <!--android:background="@drawable/ic_detailed_task"-->
+        <!--android:text="@string/btn_sync_task_text"/>-->
+    <!--<ImageButton-->
+        <!--android:id="@+id/btn_delete_task"-->
+        <!--android:text="@string/btn_sync_task_text"-->
+        <!--android:background="@drawable/ic_delete_task"-->
+        <!--style="@style/rv_button"-->
+        <!--/>-->
+</LinearLayout>

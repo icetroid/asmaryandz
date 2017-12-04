@@ -7,4 +7,10 @@
         <item>@string/priority_d</item>
     </array>
 
+    <array name="main_vp_background_color">
+        <item>@color/main_vp_background_color_a</item>
+        <item>@color/main_vp_background_color_b</item>
+        <item>@color/main_vp_background_color_c</item>
+        <item>@color/main_vp_background_color_d</item>
+    </array>
 </resources>

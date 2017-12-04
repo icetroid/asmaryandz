@@ -13,4 +13,6 @@ public interface MainView
     void openCreateTaskActivity();
     void onSwipeTasks(int position);
     void setPriorityTextView(String s);
+
+    void changeBackgroundVpTasks(int color);
 }

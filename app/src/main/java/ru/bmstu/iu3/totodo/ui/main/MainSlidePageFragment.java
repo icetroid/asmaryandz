@@ -14,6 +14,7 @@ import java.util.List;
 import ru.bmstu.iu3.totodo.R;
 import ru.bmstu.iu3.totodo.data.db.TaskDb;
 import ru.bmstu.iu3.totodo.data.models.Task;
+import ru.bmstu.iu3.totodo.utils.ArrayUtils;
 
 /**
  * Created by Icetroid on 18.11.2017.
@@ -45,6 +46,7 @@ public class MainSlidePageFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_main_slide, container, false);
+        rootView.setBackgroundColor(ArrayUtils.getMainVpBackgroundColor(priority, getContext()));
         rvTasks = rootView.findViewById(R.id.rv_tasks);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         rvTasks.setLayoutManager(linearLayoutManager);

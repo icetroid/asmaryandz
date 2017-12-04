@@ -38,15 +38,29 @@
         android:id="@+id/vp_main_tasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/btn_open_create_task"
         android:layout_below="@+id/main_upper_bar"/>
 
+    <!--<android.support.design.widget.FloatingActionButton-->
     <Button
         android:id="@+id/btn_open_create_task"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="54dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="@string/btn_open_create_task_text"/>
+        android:layout_margin="@dimen/default_margin"
+        android:background="@drawable/ic_add_new_task"
+        />
+
+    <FrameLayout
+        android:id="@+id/create_task_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+        <!--android:text="@string/btn_open_create_task_text"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--/>-->
 
 </RelativeLayout>

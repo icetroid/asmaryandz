@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_margin="20dp"
     >
 
     <EditText
@@ -13,10 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
+        android:background="@drawable/create_task_et_background"
         android:gravity="top"
         android:hint="@string/ed_task_text_label"
         android:inputType="textMultiLine"
         android:selectAllOnFocus="false"
+        android:layout_marginBottom="20dp"
         android:singleLine="false"/>
 
     <LinearLayout
@@ -26,33 +29,43 @@
         android:layout_weight="0"
         >
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_set_task_priority"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_set_task_priority_text"
+            android:src="@drawable/ic_choose_priority"
+            style="@style/create_task_activity_button"
+            android:padding="2dp"
             />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_set_task_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_set_task_date_text"
+            android:src="@drawable/ic_choose_date"
+            style="@style/create_task_activity_button"
             />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_set_task_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_set_task_time_text"
+            android:src="@drawable/ic_choose_time"
+            style="@style/create_task_activity_button"
             />
+
+        <ImageButton
+            android:id="@+id/btn_set_sync_calendar"
+            android:src="@drawable/ic_choose_sync_calendar_on"
+            style="@style/create_task_activity_button"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_set_notify"
+            android:src="@drawable/ic_choose_notify_off"
+            style="@style/create_task_activity_button"
+            />
+
 
         <Button
             android:id="@+id/btn_create_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_create_task_text"
-            android:onClick="createTask"
             />
     </LinearLayout>
 

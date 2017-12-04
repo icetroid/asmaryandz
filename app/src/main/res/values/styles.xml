@@ -8,4 +8,23 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="create_task_activity_button">
+        <item name="android:layout_width">@dimen/create_task_btn_size</item>
+        <item name="android:layout_height">@dimen/create_task_btn_size</item>
+        <item name="android:layout_marginLeft">@dimen/create_task_btn_margin</item>
+        <item name="android:layout_marginRight">@dimen/create_task_btn_margin</item>
+        <item name="android:background">@drawable/create_task_button_background</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
+
+    <style name="rv_button">
+        <item name="android:layout_width">@dimen/main_task_item_button_size</item>
+        <item name="android:layout_height">@dimen/main_task_item_button_size</item>
+        <item name="android:layout_marginLeft">@dimen/main_task_item_button_margin</item>
+        <item name="android:layout_marginRight">@dimen/main_task_item_button_margin</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
+
 </resources>

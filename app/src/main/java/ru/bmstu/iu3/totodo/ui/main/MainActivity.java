@@ -1,27 +1,15 @@
 package ru.bmstu.iu3.totodo.ui.main;
 
-import android.content.Intent;
-import android.nfc.Tag;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Date;
-import java.util.List;
-
 import ru.bmstu.iu3.totodo.R;
-import ru.bmstu.iu3.totodo.data.db.TaskDb;
 import ru.bmstu.iu3.totodo.data.models.Task;
-import ru.bmstu.iu3.totodo.ui.createTask.CreateTaskActivity;
-import ru.bmstu.iu3.totodo.utils.CalendarUtils;
-import ru.bmstu.iu3.totodo.utils.FakeDataUtils;
+import ru.bmstu.iu3.totodo.ui.createTask.CreateTaskFragment;
 
 public class MainActivity extends AppCompatActivity implements MainView{
 
@@ -61,11 +49,13 @@ public class MainActivity extends AppCompatActivity implements MainView{
         tasksPagerAdapter = new TasksSlideAdapter(getSupportFragmentManager());
         vpTasks.setAdapter(tasksPagerAdapter);
         mSwipeTasksListener = new SwipeTasksListener(this);
-//        FakeDataUtils.insertTasksIntoDb(this, 100);
+        //FakeDataUtils.insertTasksIntoDb(this, 100);
 
         vpTasks.setCurrentItem(INITIAL_PAGE_PRIORITY.getPriority());
         onSwipeTasks(INITIAL_PAGE_PRIORITY.getPriority());
     }
+
+
 
     @Override
     protected void onResume()
@@ -86,8 +76,28 @@ public class MainActivity extends AppCompatActivity implements MainView{
     public void openCreateTaskActivity()
     {
         //TODO change back
-        Intent intent = new Intent(MainActivity.this, CreateTaskActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(MainActivity.this, CreateTaskActivity.class);
+        //startActivity(intent);
+        if (findViewById(R.id.create_task_fragment) != null) {
+
+            // However, if we're being restored from a previous state,
+            // then we don't need to do anything and should return or else
+            // we could end up with overlapping fragments.
+//            if (savedInstanceState != null) {
+//                return;
+//            }
+
+            // Create a new Fragment to be placed in the activity layout
+            CreateTaskFragment firstFragment = new CreateTaskFragment();
+
+            // In case this activity was started with special instructions from an
+            // Intent, pass the Intent's extras to the fragment as arguments
+
+            // Add the fragment to the 'fragment_container' FrameLayout
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.create_task_fragment, firstFragment).commit();
+        }
+
 //        Log.i(TAG, "create task");
 //        Task task = new Task();
 //        task.setDate(new Date());
@@ -106,6 +116,11 @@ public class MainActivity extends AppCompatActivity implements MainView{
     public void setPriorityTextView(String text)
     {
         tvPriority.setText(text);
+    }
+
+    @Override
+    public void changeBackgroundVpTasks(int color) {
+        vpTasks.setBackgroundColor(color);
     }
 
     private class CreateTaskListener implements View.OnClickListener

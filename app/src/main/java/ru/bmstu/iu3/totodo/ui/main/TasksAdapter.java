@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -80,7 +81,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
 
         private TextView tvTitle;
         private TextView tvDate;
-        private Button btnSyncTask;
+        private ImageButton btnSyncTask;
         private Task task;
         public TaskHolder(View itemView) {
             super(itemView);
@@ -92,8 +93,9 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
 
         public void bind(Task task) {
             this.task = task;
-            tvTitle.setText(task.getId() + " " + task.getText() + " "  + dateFormat.format(task.getDate()) + " " + task.getPriority());
-//            tvDate.setText(dateFormat.format(task.getDate()));
+            //tvTitle.setText(task.getId() + " " + task.getText() + " "  + dateFormat.format(task.getDate()) + " " + task.getPriority());
+            tvTitle.setText(task.getPriority() + " " + task.getId() + " " + task.getText());
+            tvDate.setText(dateFormat.format(task.getDate()));
         }
 
 
