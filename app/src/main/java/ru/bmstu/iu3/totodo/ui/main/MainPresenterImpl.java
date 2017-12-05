@@ -36,6 +36,11 @@ public class MainPresenterImpl implements MainPresenter {
         //changeBackgroundVpTasks(position);
     }
 
+    @Override
+    public void openNavigationDrawer() {
+        mainView.openNagivation();
+    }
+
     private void changeBackgroundVpTasks(int position)
     {
         int color = ArrayUtils.getMainVpBackgroundColor(position, context);

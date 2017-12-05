@@ -15,4 +15,6 @@ public interface MainView
     void setPriorityTextView(String s);
 
     void changeBackgroundVpTasks(int color);
+
+    void openNagivation();
 }

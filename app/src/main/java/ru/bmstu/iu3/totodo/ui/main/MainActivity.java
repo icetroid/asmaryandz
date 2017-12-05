@@ -1,41 +1,73 @@
 package ru.bmstu.iu3.totodo.ui.main;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import ru.bmstu.iu3.totodo.R;
 import ru.bmstu.iu3.totodo.data.models.Task;
 import ru.bmstu.iu3.totodo.ui.createTask.CreateTaskFragment;
 
-public class MainActivity extends AppCompatActivity implements MainView{
+public class MainActivity extends AppCompatActivity implements MainView, NavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = "MainActivity";
     private static final Task.Priority INITIAL_PAGE_PRIORITY = Task.Priority.A;
     private MainPresenter presenter;
 
+    //Todo Navigation bar
+    private ImageButton btnNavigationOpen;
+    private DrawerLayout drawer;
+
     private Button btnCreateTask;
     private TextView tvPriority;
     private TextView tvStats;
 
-    private ImageButton btnOpenOptionBar;
+
 
     private ViewPager vpTasks;
     private TasksSlideAdapter tasksPagerAdapter;
     private SwipeTasksListener mSwipeTasksListener;
 
     private CreateTaskListener createTaskListener = new CreateTaskListener();
-
+    private NavigationButtonListener mNagivationButtonListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         presenter = new MainPresenterImpl(this, this);
+
+        mNagivationButtonListener = new NavigationButtonListener(presenter);
+
+        //TODO navigation bar
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        drawer = findViewById(R.id.drawer_layout);
+
+        btnNavigationOpen = findViewById(R.id.toolbar);
+        btnNavigationOpen.setOnClickListener(mNagivationButtonListener);
+
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.addDrawerListener(toggle);
+//        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
 
         //инициализация кнопки создания нового задания
         btnCreateTask = findViewById(R.id.btn_open_create_task);
@@ -45,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements MainView{
         tvPriority = findViewById(R.id.tv_main_priority);
         tvStats = findViewById(R.id.tv_main_tasks_stats);
 
-        btnOpenOptionBar = findViewById(R.id.btn_open_option_bar);
 
         //инициализация view pager и pager adapter
         vpTasks = findViewById(R.id.vp_main_tasks);
@@ -59,6 +90,16 @@ public class MainActivity extends AppCompatActivity implements MainView{
     }
 
 
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     protected void onResume()
@@ -124,6 +165,24 @@ public class MainActivity extends AppCompatActivity implements MainView{
     @Override
     public void changeBackgroundVpTasks(int color) {
         vpTasks.setBackgroundColor(color);
+    }
+
+    @Override
+    public void openNagivation() {
+        drawer.openDrawer(Gravity.START);
+    }
+
+    //TODO change nagivation
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     private class CreateTaskListener implements View.OnClickListener

@@ -11,4 +11,6 @@ import ru.bmstu.iu3.totodo.data.models.Task;
 public interface MainPresenter {
     void createTask();
     void onSwipeTasks(int position);
+
+    void openNavigationDrawer();
 }
