@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import ru.bmstu.iu3.totodo.R;
@@ -18,9 +19,10 @@ public class MainActivity extends AppCompatActivity implements MainView{
     private MainPresenter presenter;
 
     private Button btnCreateTask;
-    private TextView tvDate;
     private TextView tvPriority;
     private TextView tvStats;
+
+    private ImageButton btnOpenOptionBar;
 
     private ViewPager vpTasks;
     private TasksSlideAdapter tasksPagerAdapter;
@@ -40,9 +42,10 @@ public class MainActivity extends AppCompatActivity implements MainView{
         btnCreateTask.setOnClickListener(createTaskListener);
 
         //инициализация text view
-        tvDate = findViewById(R.id.tv_main_date);
         tvPriority = findViewById(R.id.tv_main_priority);
         tvStats = findViewById(R.id.tv_main_tasks_stats);
+
+        btnOpenOptionBar = findViewById(R.id.btn_open_option_bar);
 
         //инициализация view pager и pager adapter
         vpTasks = findViewById(R.id.vp_main_tasks);

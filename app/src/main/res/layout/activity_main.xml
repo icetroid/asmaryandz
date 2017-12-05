@@ -13,12 +13,13 @@
         android:layout_height="@dimen/main_upper_bar_height"
         android:layout_alignParentTop="true"
         android:orientation="horizontal">
-        <TextView
-            android:id="@+id/tv_main_date"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="@string/tv_main_date_default_text"
-            android:layout_weight="1"/>
+        <ImageButton
+            android:layout_width="@dimen/option_bar_button_size"
+            android:layout_height="@dimen/option_bar_button_size"
+            android:background="@drawable/ic_option_bar_button"
+            android:layout_weight="0"
+            android:id="@+id/btn_open_option_bar"
+            />
         <TextView
             android:id="@+id/tv_main_priority"
             android:layout_width="0dp"

@@ -8,4 +8,5 @@
     <dimen name="create_task_btn_size">50dp</dimen>
     <dimen name="create_task_btn_margin">10dp</dimen>
     <dimen name="main_task_item_button_margin">10dp</dimen>
+    <dimen name="option_bar_button_size">48dp</dimen>
 </resources>
