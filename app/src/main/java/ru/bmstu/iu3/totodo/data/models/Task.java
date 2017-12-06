@@ -4,7 +4,10 @@ import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Icetroid on 15.11.2017.
@@ -13,24 +16,40 @@ import java.util.Date;
 public class Task
 {
     private static final String TAG = "Task";
+    private static final String FIELD_TEXT = "text";
+    private static final String FIELD_PRIORITY = "priority";
+    private static final String FIELD_DATE = "date";
+    private static final String FIELD_TIME = "time";
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+    public static final String FIELD_ID = "id";
 
     private long id;
     private String text;
     private Priority priority;
     private Date date;
+    private boolean dateSet;
+    private boolean timeSet;
 
     public Task()
     {
-
+        id = -1;
+        text = null;
+        priority = null;
+        dateSet = false;
+        timeSet = false;
+        date = new Date();
     }
 
-    public Task(long id, String text)
+    public boolean getDateSet()
     {
-        this.id = id;
-        this.text = text;
+        return dateSet;
     }
 
+    public boolean getTimeSet()
+    {
+        return timeSet;
+    }
 
     public Priority getPriority() {
         return priority;
@@ -46,12 +65,51 @@ public class Task
         this.priority = Priority.valueOf(priority);
     }
 
+
+
+    public List<String> getEmptyFields()
+    {
+        List<String> emptyFields = new LinkedList<>();
+        if(text == null)
+        {
+            emptyFields.add(FIELD_TEXT);
+        }
+        if(priority == null)
+        {
+            emptyFields.add(FIELD_PRIORITY);
+        }
+        if(!dateSet)
+        {
+            emptyFields.add(FIELD_DATE);
+        }
+        if(!timeSet)
+        {
+            emptyFields.add(FIELD_TIME);
+        }
+        return emptyFields;
+    }
+
     public Date getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setFullDate(Date date)
+    {
+        dateSet = true;
+        timeSet = true;
         this.date = date;
+    }
+
+    public void setTime(Date date)
+    {
+        this.date = date;
+        timeSet = true;
+    }
+
+    public void setDate(Date date)
+    {
+        this.date = date;
+        dateSet = true;
     }
 
     public long getId() {
@@ -68,6 +126,12 @@ public class Task
     }
 
     public void setText(String text) {
+        Log.i(TAG, "text = " + text + ".");
+        text = text.trim();
+        if(text.isEmpty()) {
+            this.text = null;
+            return;
+        }
         this.text = text;
     }
 

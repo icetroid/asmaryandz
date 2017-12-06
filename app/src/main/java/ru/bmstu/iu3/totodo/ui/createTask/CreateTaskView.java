@@ -9,4 +9,6 @@ public interface CreateTaskView {
     void showCalendarDialog();
     void showTimeDialog();
     String getTaskText();
+
+    void showErrorDialog(String error);
 }

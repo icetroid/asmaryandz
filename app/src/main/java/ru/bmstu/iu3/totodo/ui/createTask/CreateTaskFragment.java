@@ -3,22 +3,26 @@ package ru.bmstu.iu3.totodo.ui.createTask;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import ru.bmstu.iu3.totodo.R;
-import ru.bmstu.iu3.totodo.ui.main.MainActivity;
+import ru.bmstu.iu3.totodo.data.models.Task;
+import ru.bmstu.iu3.totodo.ui.main.CreateTaskInterface;
 import ru.bmstu.iu3.totodo.ui.main.MainView;
 import ru.bmstu.iu3.totodo.utils.DialogUtils;
 
@@ -31,6 +35,11 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
 
 
     private static final String TAG = "CreateTaskActivity";
+    private static final String KEY_TASK_ID = "taskId";
+    private static final String KEY_UPDATE_TASK = "updateTask";
+    private static final String KEY_TASK_TEXT = "taskText";
+    private static final String KEY_TASK_DATE = "taskDate";
+    private static final String KEY_TASK_PRIORITY = "taskPriority";
 
     private CreateTaskPresenter presenter;
 
@@ -42,11 +51,40 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
     private ImageButton btnSetDate;
     private ImageButton btnSetTime;
 
+    private CreateTaskInterface mCreateTaskInterface;
+
     private Button btnCreateTask;
 
     private EditText etTaskText;
 
     private MainView mMainView;
+
+    private boolean updateTask = false;
+
+
+    public static CreateTaskFragment getInstanceEditTask(Task task)
+    {
+        CreateTaskFragment createTaskFragment = new CreateTaskFragment();
+        Bundle args = new Bundle();
+        long id = task.getId();
+        args.putLong(KEY_TASK_ID, id);
+
+        String text = task.getText();
+        args.putString(KEY_TASK_TEXT, text);
+
+        Date date = task.getDate();
+        args.putLong(KEY_TASK_DATE,  date.getTime());
+
+        int priority = task.getPriority().getPriority();
+        args.putInt(KEY_TASK_PRIORITY, priority);
+
+        args.putBoolean(KEY_UPDATE_TASK, true);
+
+        createTaskFragment.setArguments(args);
+        return createTaskFragment;
+    }
+
+
 
     @Nullable
     @Override
@@ -78,16 +116,64 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
         });
 
         etTaskText = view.findViewById(R.id.et_task_text);
+
+
+        Bundle args = getArguments();
+
+        if(args != null && args.containsKey(KEY_UPDATE_TASK))
+        {
+            if(args.getBoolean(KEY_UPDATE_TASK))
+            {
+                updateTask = true;
+
+                long id = args.getLong(KEY_TASK_ID);
+                String text = args.getString(KEY_TASK_TEXT);
+                Task.Priority priority = Task.Priority.getPriority(args.getInt(KEY_TASK_PRIORITY));
+
+                long dateLong = args.getLong(KEY_TASK_DATE);
+                Date date = new Date(dateLong);
+
+                presenter.setId(id);
+                presenter.setText(text);
+                presenter.setFullDate(date);
+                presenter.setPriority(priority);
+
+                etTaskText.setText(text);
+
+                btnCreateTask.setText(getString(R.string.create_task_update_text));
+            }
+        }
+
         return view;
     }
 
     public void createTask(View view){
 //        Log.i(TAG, presenter.getTask().toString());
-        presenter.createTask();
-        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+        boolean success = false;
+        if(updateTask)
+        {
+            success = presenter.updateTask();
+            Log.i(TAG, "update" + presenter.getTask());
+        }
+        else
+        {
+            success = presenter.createTask();
+        }
+        if(success && mCreateTaskInterface != null)
+        {
+            mCreateTaskInterface.taskCreated(presenter.getTask().getPriority());
+            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+        }
     }
 
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof CreateTaskInterface){
+            mCreateTaskInterface = (CreateTaskInterface) context;
+        }
+    }
 
     @Override
     public void showChoosePriorityDialog() {
@@ -119,6 +205,12 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
     public String getTaskText() {
         return etTaskText.getText().toString();
     }
+
+    @Override
+    public void showErrorDialog(String error) {
+        Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
+    }
+
 
     /**
      * Слушает удерживание кнопок

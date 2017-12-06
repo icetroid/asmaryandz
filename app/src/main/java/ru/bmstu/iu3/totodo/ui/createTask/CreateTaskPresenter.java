@@ -10,7 +10,7 @@ import ru.bmstu.iu3.totodo.data.models.Task;
 
 public interface CreateTaskPresenter {
     void setPriority(Task.Priority priority);
-    void setDate(Date date);
+    void setFullDate(Date date);
     void setTime();
     void setCurrentDate();
     void chooseTime();
@@ -19,5 +19,11 @@ public interface CreateTaskPresenter {
     void chooseDate();
     Task getTask();
     Date getDate();
-    void createTask();
+    boolean createTask();
+    void setId(long id);
+    void setText(String text);
+    boolean updateTask();
+
+    void setDate(Date date);
+    void setTime(Date date);
 }

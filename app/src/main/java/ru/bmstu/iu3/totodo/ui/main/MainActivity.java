@@ -1,7 +1,9 @@
 package ru.bmstu.iu3.totodo.ui.main;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -20,8 +22,9 @@ import android.widget.TextView;
 import ru.bmstu.iu3.totodo.R;
 import ru.bmstu.iu3.totodo.data.models.Task;
 import ru.bmstu.iu3.totodo.ui.createTask.CreateTaskFragment;
+import ru.bmstu.iu3.totodo.ui.test.Test;
 
-public class MainActivity extends AppCompatActivity implements MainView, NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements TaskEditor, MainView, NavigationView.OnNavigationItemSelectedListener, CreateTaskInterface{
 
     private static final String TAG = "MainActivity";
     private static final Task.Priority INITIAL_PAGE_PRIORITY = Task.Priority.A;
@@ -144,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Navigat
 
 //        Log.i(TAG, "create task");
 //        Task task = new Task();
-//        task.setDate(new Date());
+//        task.setFullDate(new Date());
 //        task.setText("sdfsdaf");
 //        CalendarUtils.insertTaskIntoCalendar(this, this, task, 2);
     }
@@ -177,12 +180,37 @@ public class MainActivity extends AppCompatActivity implements MainView, Navigat
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        switch(id)
+        {
+            case R.id.nav_eisenhower:
+                Intent intent = new Intent(MainActivity.this, Test.class);
+                startActivity(intent);
+                break;
+            default:
 
-
-
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void taskCreated(Task.Priority priority) {
+        Fragment fragment = tasksPagerAdapter.getRegisteredFragment(priority.getPriority());
+        if (fragment instanceof MainSlidePageFragment)
+        {
+            MainSlidePageFragment mainSlidePageFragment = (MainSlidePageFragment) fragment;
+            mainSlidePageFragment.update();
+            vpTasks.getAdapter().notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void editTask(Task task)
+    {
+        CreateTaskFragment editTaskFragment = CreateTaskFragment.getInstanceEditTask(task);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.create_task_fragment, editTaskFragment).commit();
     }
 
     private class CreateTaskListener implements View.OnClickListener

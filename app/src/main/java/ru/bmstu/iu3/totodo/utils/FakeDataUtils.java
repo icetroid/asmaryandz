@@ -1,10 +1,8 @@
 package ru.bmstu.iu3.totodo.utils;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -36,7 +34,7 @@ public class FakeDataUtils {
             int min = random.nextInt(50) + 1;
             int sec = random.nextInt(50) + 1;
             cal.set(year, month, day, hour, min, sec);
-            task.setDate(cal.getTime());
+            task.setFullDate(cal.getTime());
             tasks.add(task);
 //            Log.i(TAG, "Priority " + task.getPriority());
         }

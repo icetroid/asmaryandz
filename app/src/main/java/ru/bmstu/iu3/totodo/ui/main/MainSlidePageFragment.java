@@ -1,5 +1,6 @@
 package ru.bmstu.iu3.totodo.ui.main;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +29,7 @@ public class MainSlidePageFragment extends Fragment
     private RecyclerView rvTasks;
     private TasksAdapter tasksAdapter;
     private int priority;
+    private TaskEditor mTaskEditor;
 
     public static MainSlidePageFragment newInstance(int priority) {
         MainSlidePageFragment mainSlidePageFragment = new MainSlidePageFragment();
@@ -36,6 +38,19 @@ public class MainSlidePageFragment extends Fragment
         mainSlidePageFragment.setArguments(args);
         return mainSlidePageFragment;
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if(context instanceof TaskEditor)
+        {
+            mTaskEditor = (TaskEditor) context;
+
+        }
+    }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,10 +71,9 @@ public class MainSlidePageFragment extends Fragment
 
         //TODO change data
 //        setTasks(FakeDataUtils.getTasks(100));
-        TaskDb db = new TaskDb(getContext());
 //        FakeDataUtils.insertTasksIntoDb(getContext(), 100);
 //           db.deleteAllTasks();
-        setTasks(db.getTasksWithPriorityOrderByDate(Task.Priority.getPriority(priority), true));
+        setTasks();
         return rootView;
     }
 
@@ -68,4 +82,19 @@ public class MainSlidePageFragment extends Fragment
         tasksAdapter.setTasks(tasks);
     }
 
+    public void update()
+    {
+        setTasks();
+    }
+
+    private void setTasks()
+    {
+        TaskDb db = new TaskDb(getContext());
+        setTasks(db.getTasksWithPriorityOrderByDate(Task.Priority.getPriority(priority), true));
+    }
+
+    public void editTask(Task task)
+    {
+        mTaskEditor.editTask(task);
+    }
 }

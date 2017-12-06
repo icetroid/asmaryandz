@@ -38,4 +38,10 @@
     <string name="navigation_eisenhower">Метод Эйзенхауэра</string>
     <string name="navigation_settings">Настройки</string>
     <string name="navigation_about">О программе</string>
+    <string name="create_task_update_text">Сохранить</string>
+
+
+
+
 </resources>
+

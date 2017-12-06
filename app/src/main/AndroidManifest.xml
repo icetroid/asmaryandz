@@ -17,12 +17,22 @@
             android:name=".ui.main.MainActivity"
             android:label="@string/main_activity_label"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionBarTheme">
+            android:theme="@style/NoActionBarTheme"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.test.Test"
+            android:label="@string/navigation_eisenhower"
+            android:parentActivityName=".ui.main.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity"/>
+            >
         </activity>
     </application>
 

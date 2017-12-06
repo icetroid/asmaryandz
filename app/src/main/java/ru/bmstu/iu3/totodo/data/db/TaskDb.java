@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.text.ParseException;
@@ -77,6 +76,31 @@ public class TaskDb
         return tasks;
     }
 
+    public int updateTask(Task task)
+    {
+        db = mTaskDbHelper.getReadableDatabase();
+        String fullText = task.getText();
+        String priority = String.valueOf(getPriorityId(task.getPriority()));
+        Date date = task.getDate();
+
+        String formatDate = new SimpleDateFormat(DATE_FORMAT).format(date);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TaskEntry.COLUMN_FULL_TEXT, fullText);
+        contentValues.put(TaskEntry.COLUMN_PRIORITY, priority);
+        contentValues.put(TaskEntry.COLUMN_DATE, formatDate);
+
+        String selection = TaskEntry._ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(task.getId()) };
+
+        int count = db.update(
+                TaskEntry.TABLE_NAME,
+                contentValues,
+                selection,
+                selectionArgs);
+        Log.i(TAG, "count " + count + " text " + fullText);
+        return count;
+    }
+
     public List<Task> getTasks(String selection, String[] selectionsArgs, String groupBy, String having, String orderBy)
     {
         db = mTaskDbHelper.getReadableDatabase();
@@ -109,7 +133,7 @@ public class TaskDb
             task.setId(id);
             task.setText(text);
             task.setPriority(priority);
-            task.setDate(formatDate);
+            task.setFullDate(formatDate);
             tasks.add(task);
 
 //            Log.i(TAG, "Task " + task.getText() + " " + task.getPriority());

@@ -39,6 +39,6 @@ public class DateTimePickListener implements TimePickerDialog.OnTimeSetListener,
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         Date date = calendar.getTime();
-        mCreateTaskPresenter.setDate(date);
+        mCreateTaskPresenter.setTime(date);
     }
 }

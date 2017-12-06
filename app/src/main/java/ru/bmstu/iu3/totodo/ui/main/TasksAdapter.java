@@ -56,6 +56,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.rv_main_task_item, parent, false);
+
         TaskHolder taskHolder = new TaskHolder(view);
         return taskHolder;
     }
@@ -89,6 +90,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
             tvDate = itemView.findViewById(R.id.tv_rv_main_task_date);
             btnSyncTask = itemView.findViewById(R.id.btn_sync_task);
             btnSyncTask.setOnClickListener(this);
+            itemView.findViewById(R.id.rv_task_item).setOnClickListener(this);
         }
 
         public void bind(Task task) {
@@ -106,6 +108,9 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
             {
                 case R.id.btn_sync_task:
                     mTasksAdapterListener.syncTask(task);
+                    break;
+                case R.id.rv_task_item:
+                    mMainSlidePageFragment.editTask(task);
                     break;
                 default:
                     Log.i(TAG, "no such id");
