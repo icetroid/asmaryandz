@@ -39,8 +39,7 @@
     <string name="navigation_settings">Настройки</string>
     <string name="navigation_about">О программе</string>
     <string name="create_task_update_text">Сохранить</string>
-
-
+    <string name="test_intro">Небольшой тест: важно или срочно? Отметьте правильный вариант (только один).</string>
 
 
 </resources>

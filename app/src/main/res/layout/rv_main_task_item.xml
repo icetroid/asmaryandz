@@ -30,13 +30,17 @@
     </LinearLayout>
 
     <ImageButton
+        android:visibility="gone"
         android:id="@+id/btn_sync_task"
         android:text="@string/btn_sync_task_text"
         android:background="@drawable/ic_choose_sync_calendar_on"
         style="@style/rv_button"
     />
-    
+
+    //TODO change back
+
     <ImageButton
+        android:visibility="gone"
         android:id="@+id/btn_delete_task"
         android:text="@string/btn_sync_task_text"
         style="@style/rv_button"

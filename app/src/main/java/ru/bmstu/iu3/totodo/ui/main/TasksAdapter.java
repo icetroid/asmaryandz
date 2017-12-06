@@ -27,6 +27,7 @@ import ru.bmstu.iu3.totodo.data.models.Task;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> {
     private static final String TAG = "TasksAdapter";
+    private static final int MAX_TEXT_LENGTH = 100;
     private List<Task> tasks;
     private MainSlidePageFragment mMainSlidePageFragment;
     private TasksAdapterListener mTasksAdapterListener;
@@ -96,10 +97,25 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
         public void bind(Task task) {
             this.task = task;
             //tvTitle.setText(task.getId() + " " + task.getText() + " "  + dateFormat.format(task.getDate()) + " " + task.getPriority());
-            tvTitle.setText(task.getPriority() + " " + task.getId() + " " + task.getText());
+            tvTitle.setText(getFormattedTaskText());
             tvDate.setText(dateFormat.format(task.getDate()));
         }
 
+        private String getFormattedTaskText()
+        {
+            String text = task.getText();
+            if(text == null)
+            {
+                return "";
+            }
+            if(text.length() > MAX_TEXT_LENGTH)
+            {
+                text = text.substring(0, MAX_TEXT_LENGTH);
+                text = text.substring(0, text.lastIndexOf(" "));
+                text += "...";
+            }
+            return text;
+        }
 
         @Override
         public void onClick(View view) {
