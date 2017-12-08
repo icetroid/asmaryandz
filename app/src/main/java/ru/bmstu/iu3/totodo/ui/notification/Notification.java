@@ -76,6 +76,10 @@ public class Notification
 //
     public static void setNotify(Context context, Task task)
     {
+        if(task.getNotifyTime() == 0)
+        {
+            return;
+        }
         Intent intent = new Intent(context, Receiver.class);
         intent.putExtra(EXTRA_TASK_TEXT, formatTaskText(task.getText()));
 

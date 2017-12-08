@@ -59,6 +59,7 @@ public class Task
         dateSet = false;
         timeSet = false;
         date = new Date();
+        notifyTime = 0;
     }
 
     public boolean getDateSet()

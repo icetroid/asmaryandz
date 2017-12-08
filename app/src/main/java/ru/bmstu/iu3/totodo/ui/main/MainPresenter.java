@@ -1,5 +1,6 @@
 package ru.bmstu.iu3.totodo.ui.main;
 
+import java.util.Date;
 import java.util.List;
 
 import ru.bmstu.iu3.totodo.data.models.Task;
@@ -13,4 +14,14 @@ public interface MainPresenter {
     void onSwipeTasks(int position);
 
     void openNavigationDrawer();
+
+
+    void showTodayTask();
+
+    void showTomorrowTask();
+
+    void showThisWeekTask();
+
+    void showDateTask();
+    Date getShowDate();
 }

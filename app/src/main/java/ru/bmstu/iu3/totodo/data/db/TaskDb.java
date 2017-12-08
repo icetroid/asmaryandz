@@ -8,6 +8,7 @@ import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +25,17 @@ public class TaskDb
 {
     private static final String TAG = "TaskDb";
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    private static String[] defaultProjection = {
+            TaskEntry.TABLE_NAME + "." + TaskEntry._ID,
+            TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_FULL_TEXT,
+            TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_DATE,
+            TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_CALENDAR,
+            TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_NOTIFY_TIME,
+            PriorityEntry.TABLE_NAME + "." + PriorityEntry.COLUMN_PRIORITY
+    };
+
+    private static String defaultQuery = TaskEntry.TABLE_NAME + " LEFT OUTER JOIN " + PriorityEntry.TABLE_NAME + " ON " + TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_PRIORITY + "=" + PriorityEntry.TABLE_NAME + "." + PriorityEntry._ID;
 
     private TaskDbHelper mTaskDbHelper;
     private SQLiteDatabase db;
@@ -190,4 +202,259 @@ public class TaskDb
     }
 
 
+
+
+    public List<Task> getTodayTasksWithPriorityOrderByDate(Task.Priority priority, boolean desc) {
+        db = mTaskDbHelper.getReadableDatabase();
+        String todaySelection = PriorityEntry.TABLE_NAME + "." + PriorityEntry.COLUMN_PRIORITY + " = ?"; //"date(datetime("+TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_DATE+ " / 1000 , 'unixepoch')) = ? AND " +
+
+        String[] selectionsArgs = new String[]{priority.name()};
+        String order = TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_DATE;
+        if(desc)
+        {
+            order += " DESC";
+        }
+
+        Cursor cursor = db.query(defaultQuery, defaultProjection, todaySelection, selectionsArgs, null, null, order);
+        List<Task> tasks = new LinkedList<>();
+
+        while(cursor.moveToNext())
+        {
+
+            String date = cursor.getString(2);
+//            Log.i(TAG, "1 = " + cursor.getString(1) + " 2 = " + cursor.getString(2));
+//            String priority = cursor.getString(cursor.getColumnIndex())
+            Date formatDate = null;
+            try {
+                formatDate = new SimpleDateFormat(DATE_FORMAT).parse(date);
+            } catch (ParseException e) {
+                Log.e(TAG, e.getMessage());
+
+            }
+
+            if(isToday(formatDate))
+            {
+                Task task = getTask(cursor);
+                tasks.add(task);
+            }
+
+//            Log.i(TAG, "Task " + task.getText() + " " + task.getPriority());
+
+        }
+        cursor.close();
+        Log.i(TAG, "found " + tasks.size() + " " + todaySelection);
+        return tasks;
+    }
+
+    public List<Task> getTomorrowTasksWithPriorityOrderByDate(Task.Priority priority, boolean desc) {
+        db = mTaskDbHelper.getReadableDatabase();
+        String todaySelection = PriorityEntry.TABLE_NAME + "." + PriorityEntry.COLUMN_PRIORITY + " = ?"; //"date(datetime("+TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_DATE+ " / 1000 , 'unixepoch')) = ? AND " +
+
+        String[] selectionsArgs = new String[]{priority.name()};
+        String order = TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_DATE;
+        if(desc)
+        {
+            order += " DESC";
+        }
+
+        Cursor cursor = db.query(defaultQuery, defaultProjection, todaySelection, selectionsArgs, null, null, order);
+        List<Task> tasks = new LinkedList<>();
+
+        while(cursor.moveToNext())
+        {
+
+            String date = cursor.getString(2);
+//            Log.i(TAG, "1 = " + cursor.getString(1) + " 2 = " + cursor.getString(2));
+//            String priority = cursor.getString(cursor.getColumnIndex())
+            Date formatDate = null;
+            try {
+                formatDate = new SimpleDateFormat(DATE_FORMAT).parse(date);
+            } catch (ParseException e) {
+                Log.e(TAG, e.getMessage());
+
+            }
+
+            if(isTomorrow(formatDate))
+            {
+                Task task = getTask(cursor);
+                tasks.add(task);
+            }
+
+//            Log.i(TAG, "Task " + task.getText() + " " + task.getPriority());
+
+        }
+        cursor.close();
+        Log.i(TAG, "found " + tasks.size() + " " + todaySelection);
+        return tasks;
+    }
+
+    public List<Task> getThisWeekTasksWithPriorityOrderByDate(Task.Priority priority, boolean desc) {
+        db = mTaskDbHelper.getReadableDatabase();
+        String todaySelection = PriorityEntry.TABLE_NAME + "." + PriorityEntry.COLUMN_PRIORITY + " = ?"; //"date(datetime("+TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_DATE+ " / 1000 , 'unixepoch')) = ? AND " +
+
+        String[] selectionsArgs = new String[]{priority.name()};
+        String order = TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_DATE;
+        if(desc)
+        {
+            order += " DESC";
+        }
+
+        Cursor cursor = db.query(defaultQuery, defaultProjection, todaySelection, selectionsArgs, null, null, order);
+        List<Task> tasks = new LinkedList<>();
+
+        while(cursor.moveToNext())
+        {
+
+            String date = cursor.getString(2);
+//            Log.i(TAG, "1 = " + cursor.getString(1) + " 2 = " + cursor.getString(2));
+//            String priority = cursor.getString(cursor.getColumnIndex())
+            Date formatDate = null;
+            try {
+                formatDate = new SimpleDateFormat(DATE_FORMAT).parse(date);
+            } catch (ParseException e) {
+                Log.e(TAG, e.getMessage());
+
+            }
+
+            if(isThisWeek(formatDate))
+            {
+                Task task = getTask(cursor);
+                tasks.add(task);
+            }
+
+//            Log.i(TAG, "Task " + task.getText() + " " + task.getPriority());
+
+        }
+        cursor.close();
+        Log.i(TAG, "found " + tasks.size() + " " + todaySelection);
+        return tasks;
+    }
+
+    private Task getTask(Cursor cursor)
+    {
+        Task task = new Task();
+
+        long id = cursor.getLong(0);
+        String text = cursor.getString(1);
+        String date = cursor.getString(2);
+        boolean addToCalendar = cursor.getInt(3) == 1 ? true : false;
+        int notifyTime = cursor.getInt(4);
+        String taskPriority = cursor.getString(5);
+
+        Date formatDate = null;
+        try {
+            formatDate = new SimpleDateFormat(DATE_FORMAT).parse(date);
+        } catch (ParseException e) {
+            Log.e(TAG, e.getMessage());
+
+        }
+
+        task.setId(id);
+        task.setText(text);
+        task.setPriority(taskPriority);
+        task.setFullDate(formatDate);
+        task.setAddedToCalendar(addToCalendar);
+        task.setNotifyTime(notifyTime);
+        return task;
+    }
+
+    private boolean isToday(Date formatDate)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(formatDate);
+
+        Calendar now = Calendar.getInstance();
+        now.setTime(new Date());
+
+        if(calendar.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH) && calendar.get(Calendar.MONTH) == now.get(Calendar.MONTH) && calendar.get(Calendar.YEAR) == now.get(Calendar.YEAR))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isTomorrow(Date formatDate)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(formatDate);
+
+        Calendar now = Calendar.getInstance();
+        now.setTimeInMillis((new Date()).getTime() + 24 * 3600 * 1000);
+        if(calendar.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH) && calendar.get(Calendar.MONTH) == now.get(Calendar.MONTH) && calendar.get(Calendar.YEAR) == now.get(Calendar.YEAR))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isThisWeek(Date formatDate)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(formatDate);
+
+        Calendar now = Calendar.getInstance();
+        now.setTime(new Date());
+        if(calendar.get(Calendar.MONTH) == now.get(Calendar.MONTH) && calendar.get(Calendar.YEAR) == now.get(Calendar.YEAR))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public List<Task> getDateTasksWithPriorityOrderByDate(Task.Priority priority, boolean desc, Date choosenDate) {
+        db = mTaskDbHelper.getReadableDatabase();
+        String todaySelection = PriorityEntry.TABLE_NAME + "." + PriorityEntry.COLUMN_PRIORITY + " = ?"; //"date(datetime("+TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_DATE+ " / 1000 , 'unixepoch')) = ? AND " +
+
+        String[] selectionsArgs = new String[]{priority.name()};
+        String order = TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_DATE;
+        if(desc)
+        {
+            order += " DESC";
+        }
+
+        Cursor cursor = db.query(defaultQuery, defaultProjection, todaySelection, selectionsArgs, null, null, order);
+        List<Task> tasks = new LinkedList<>();
+
+        while(cursor.moveToNext())
+        {
+
+            String date = cursor.getString(2);
+//            Log.i(TAG, "1 = " + cursor.getString(1) + " 2 = " + cursor.getString(2));
+//            String priority = cursor.getString(cursor.getColumnIndex())
+            Date formatDate = null;
+            try {
+                formatDate = new SimpleDateFormat(DATE_FORMAT).parse(date);
+            } catch (ParseException e) {
+                Log.e(TAG, e.getMessage());
+
+            }
+
+            if(isDate(formatDate, choosenDate))
+            {
+                Task task = getTask(cursor);
+                tasks.add(task);
+            }
+
+//            Log.i(TAG, "Task " + task.getText() + " " + task.getPriority());
+
+        }
+        cursor.close();
+        Log.i(TAG, "found " + tasks.size() + " " + todaySelection);
+        return tasks;
+    }
+
+    private boolean isDate(Date formatDate, Date choosenDate)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(formatDate);
+
+        Calendar now = Calendar.getInstance();
+        now.setTime(choosenDate);
+
+        if(calendar.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH) && calendar.get(Calendar.MONTH) == now.get(Calendar.MONTH) && calendar.get(Calendar.YEAR) == now.get(Calendar.YEAR))
+        {
+            return true;
+        }
+        return false;
+    }
 }

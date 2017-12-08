@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.Date;
 
 import ru.bmstu.iu3.totodo.R;
 import ru.bmstu.iu3.totodo.data.db.TaskDb;
@@ -188,6 +191,18 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
                 Intent intent = new Intent(MainActivity.this, Test.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_today:
+                presenter.showTodayTask();
+                break;
+            case R.id.nav_tomorrow:
+                presenter.showTomorrowTask();
+                break;
+            case R.id.nav_this_week:
+                presenter.showThisWeekTask();
+                break;
+            case R.id.nav_choose_date:
+                presenter.showDateTask();
+                break;
 //            case R.id.nav_about:
 //                Notification notification = new Notification(this);
 //                notification.setNotify();
@@ -200,6 +215,39 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
         return true;
     }
 
+
+    @Override
+    public void showDateTask(Date date) {
+        Log.i(TAG, "showdatetask");
+        tasksPagerAdapter.setTaskType(MainSlidePageFragment.TASK_STATE_DATE);
+        tasksPagerAdapter.setShowDate(presenter.getShowDate());
+        for(Task.Priority priority : Task.Priority.values())
+        {
+            Fragment fragment = tasksPagerAdapter.getRegisteredFragment(priority.getPriority());
+            if (fragment instanceof MainSlidePageFragment)
+            {
+                MainSlidePageFragment mainSlidePageFragment = (MainSlidePageFragment) fragment;
+                mainSlidePageFragment.setTaskDate(date);
+                vpTasks.getAdapter().notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    public void showThisWeekTask() {
+        tasksPagerAdapter.setTaskType(MainSlidePageFragment.TASK_STATE_THIS_WEEK);
+        for(Task.Priority priority : Task.Priority.values())
+        {
+            Fragment fragment = tasksPagerAdapter.getRegisteredFragment(priority.getPriority());
+            if (fragment instanceof MainSlidePageFragment)
+            {
+                MainSlidePageFragment mainSlidePageFragment = (MainSlidePageFragment) fragment;
+                mainSlidePageFragment.setTaskThisWeek();
+                vpTasks.getAdapter().notifyDataSetChanged();
+            }
+        }
+    }
+
     @Override
     public void taskCreated(Task.Priority priority) {
         Fragment fragment = tasksPagerAdapter.getRegisteredFragment(priority.getPriority());
@@ -208,6 +256,39 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
             MainSlidePageFragment mainSlidePageFragment = (MainSlidePageFragment) fragment;
             mainSlidePageFragment.update();
             vpTasks.getAdapter().notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void showTodayTask() {
+        tasksPagerAdapter.setTaskType(MainSlidePageFragment.TASK_STATE_TODAY);
+
+        for(Task.Priority priority : Task.Priority.values())
+        {
+            Fragment fragment = tasksPagerAdapter.getRegisteredFragment(priority.getPriority());
+            if (fragment instanceof MainSlidePageFragment)
+            {
+                MainSlidePageFragment mainSlidePageFragment = (MainSlidePageFragment) fragment;
+                mainSlidePageFragment.setTaskToday();
+                vpTasks.getAdapter().notifyDataSetChanged();
+            }
+        }
+
+    }
+
+    @Override
+    public void showTomorrowTask() {
+        tasksPagerAdapter.setTaskType(MainSlidePageFragment.TASK_STATE_TOMORROW);
+
+        for(Task.Priority priority : Task.Priority.values())
+        {
+            Fragment fragment = tasksPagerAdapter.getRegisteredFragment(priority.getPriority());
+            if (fragment instanceof MainSlidePageFragment)
+            {
+                MainSlidePageFragment mainSlidePageFragment = (MainSlidePageFragment) fragment;
+                mainSlidePageFragment.setTaskTomorrow();
+                vpTasks.getAdapter().notifyDataSetChanged();
+            }
         }
     }
 

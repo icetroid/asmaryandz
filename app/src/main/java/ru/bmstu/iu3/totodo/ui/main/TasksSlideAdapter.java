@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
+import java.util.Date;
 import java.util.List;
 
 import ru.bmstu.iu3.totodo.data.models.Task;
@@ -17,19 +18,26 @@ import ru.bmstu.iu3.totodo.data.models.Task;
 public class TasksSlideAdapter extends FragmentStatePagerAdapter {
 
     SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+    private String taskType;
 
 
     public static final int NUM_PAGES = Task.Priority.values().length;
+    public Date mShowDate;
 
-    public TasksSlideAdapter(FragmentManager fm)
-    {
+    public TasksSlideAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int position) {
-        return MainSlidePageFragment.newInstance(position);
+        return MainSlidePageFragment.newInstance(position, taskType, mShowDate);
     }
+
+    public void setTaskType(String type) {
+        taskType = type;
+    }
+
+
 
     @Override
     public int getCount() {
@@ -58,5 +66,9 @@ public class TasksSlideAdapter extends FragmentStatePagerAdapter {
     public int getItemPosition(Object object) {
         // POSITION_NONE makes it possible to reload the PagerAdapter
         return POSITION_NONE;
+    }
+
+    public void setShowDate(Date showDate) {
+        mShowDate = showDate;
     }
 }
