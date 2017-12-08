@@ -7,10 +7,18 @@
         <item>@string/priority_d</item>
     </array>
 
+    <array name="notify_times">
+        <item>@string/no_notifications</item>
+        <item>@string/fifteen_minutes</item>
+        <item>@string/half_an_hour</item>
+        <item>@string/hour</item>
+    </array>
+
     <array name="main_vp_background_color">
         <item>@color/main_vp_background_color_a</item>
         <item>@color/main_vp_background_color_b</item>
         <item>@color/main_vp_background_color_c</item>
         <item>@color/main_vp_background_color_d</item>
     </array>
+
 </resources>

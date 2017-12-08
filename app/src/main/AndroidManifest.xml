@@ -34,6 +34,9 @@
                 android:value=".ui.main.MainActivity"/>
             >
         </activity>
+        <receiver
+            android:name=".ui.notification.Receiver"
+            android:process=":remote" />
     </application>
 
 </manifest>

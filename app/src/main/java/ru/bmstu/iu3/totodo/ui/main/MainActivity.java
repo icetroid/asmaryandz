@@ -20,8 +20,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import ru.bmstu.iu3.totodo.R;
+import ru.bmstu.iu3.totodo.data.db.TaskDb;
 import ru.bmstu.iu3.totodo.data.models.Task;
 import ru.bmstu.iu3.totodo.ui.createTask.CreateTaskFragment;
+import ru.bmstu.iu3.totodo.ui.notification.Notification;
 import ru.bmstu.iu3.totodo.ui.test.Test;
 
 public class MainActivity extends AppCompatActivity implements TaskEditor, MainView, NavigationView.OnNavigationItemSelectedListener, CreateTaskInterface{
@@ -186,6 +188,10 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
                 Intent intent = new Intent(MainActivity.this, Test.class);
                 startActivity(intent);
                 break;
+//            case R.id.nav_about:
+//                Notification notification = new Notification(this);
+//                notification.setNotify();
+//                break;
             default:
 
         }

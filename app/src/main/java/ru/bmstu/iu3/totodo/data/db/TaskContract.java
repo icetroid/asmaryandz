@@ -16,6 +16,8 @@ public class TaskContract
         public static final String COLUMN_FULL_TEXT = "fullText";
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_PRIORITY = "priority";
+        public static final String COLUMN_CALENDAR = "calendar";
+        public static final String COLUMN_NOTIFY_TIME = "notifyTime";
     }
 
     public static final class PriorityEntry implements BaseColumns

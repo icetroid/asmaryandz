@@ -50,11 +50,12 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
     private ImageButton btnSetPriority;
     private ImageButton btnSetDate;
     private ImageButton btnSetTime;
+    private ImageButton btnSetNotifyTime;
 
     private CreateTaskInterface mCreateTaskInterface;
 
     private Button btnCreateTask;
-
+    private Button btnCancelTask;
     private EditText etTaskText;
 
     private MainView mMainView;
@@ -106,12 +107,24 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
         btnSetTime.setOnLongClickListener(mSetTaskPropertyLongListener);
 
         mDateTimePickListener = new DateTimePickListener(presenter);
+
+        btnSetNotifyTime = view.findViewById(R.id.btn_set_notify);
+        btnSetNotifyTime.setOnClickListener(mSetTaskPropertiesListener);
+
         //Todo delete this button
         btnCreateTask = view.findViewById(R.id.btn_create_task);
         btnCreateTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 createTask(view);
+            }
+        });
+
+        btnCancelTask = view.findViewById(R.id.btn_cancel_create_task);
+        btnCancelTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().remove(CreateTaskFragment.this).commit();
             }
         });
 
@@ -178,6 +191,12 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
     @Override
     public void showChoosePriorityDialog() {
         Dialog dialog = DialogUtils.makeChoosePriorityDialog(getContext(), new ChoosePriorityListener(presenter));
+        dialog.show();
+    }
+
+    @Override
+    public void showChooseNotifyTimeDialog() {
+        Dialog dialog = DialogUtils.makeChooseNotifyTimeDialog(getContext(), new ChooseNotifyTimeListener(presenter));
         dialog.show();
     }
 
@@ -256,6 +275,8 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
                 case R.id.btn_set_task_time:
                     presenter.chooseTime();
                     break;
+                case R.id.btn_set_notify:
+                    presenter.chooseNotifyTime();
             }
         }
     }

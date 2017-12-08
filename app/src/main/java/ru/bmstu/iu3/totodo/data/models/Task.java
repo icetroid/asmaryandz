@@ -22,6 +22,8 @@ public class Task
     private static final String FIELD_TIME = "time";
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
+
+
     public static final String FIELD_ID = "id";
 
     private long id;
@@ -30,6 +32,24 @@ public class Task
     private Date date;
     private boolean dateSet;
     private boolean timeSet;
+    private boolean isAddedToCalendar;
+    private int notifyTime;
+
+    public boolean isAddedToCalendar() {
+        return isAddedToCalendar;
+    }
+
+    public void setAddedToCalendar(boolean addedToCalendar) {
+        isAddedToCalendar = addedToCalendar;
+    }
+
+    public int getNotifyTime() {
+        return notifyTime;
+    }
+
+    public void setNotifyTime(int notifyTime) {
+        this.notifyTime = notifyTime;
+    }
 
     public Task()
     {

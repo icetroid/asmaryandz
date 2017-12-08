@@ -40,7 +40,13 @@
     <string name="navigation_about">О программе</string>
     <string name="create_task_update_text">Сохранить</string>
     <string name="test_intro">Небольшой тест: важно или срочно? Отметьте правильный вариант (только один).</string>
+    <string name="btn_cancel_create_task_text">Отмена</string>
+    <string name="choose_notify_time_dialog_title">Время напоминания</string>
 
-
+    <string name="fifteen_minutes">За 15 минут</string>
+    <string name="half_an_hour">За 30 минут</string>
+    <string name="hour">За час</string>
+    <string name="no_notifications">Не напоминать</string>
+    <string name="notification_title">Какой-то текст</string>
 </resources>
 

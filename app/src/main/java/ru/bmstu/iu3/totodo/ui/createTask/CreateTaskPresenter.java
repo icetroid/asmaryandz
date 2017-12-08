@@ -26,4 +26,8 @@ public interface CreateTaskPresenter {
 
     void setDate(Date date);
     void setTime(Date date);
+
+    void setNotifyTime(int notifyTimeSec);
+
+    void chooseNotifyTime();
 }

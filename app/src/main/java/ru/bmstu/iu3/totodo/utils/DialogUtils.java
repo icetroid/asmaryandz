@@ -29,6 +29,13 @@ public class DialogUtils {
         return dialog;
     }
 
+    public static Dialog makeChooseNotifyTimeDialog(Context context, DialogInterface.OnClickListener listener){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.choose_notify_time_dialog_title).setItems(R.array.notify_times, listener);
+        AlertDialog dialog = builder.create();
+        return dialog;
+    }
+
     public static Dialog makeChooseCalendarId(Context context, Activity activity, ChooseCalendar chooseCalendar){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.choose_calendar_id_title);

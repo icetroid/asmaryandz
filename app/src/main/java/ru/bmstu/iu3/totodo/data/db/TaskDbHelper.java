@@ -15,7 +15,7 @@ import static ru.bmstu.iu3.totodo.data.db.TaskContract.*;
 public class TaskDbHelper extends SQLiteOpenHelper
 {
     private static final String DATABASE_NAME = "tasks.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public TaskDbHelper(Context context)
     {
@@ -37,6 +37,8 @@ public class TaskDbHelper extends SQLiteOpenHelper
                 TaskEntry.COLUMN_FULL_TEXT + " TEXT NOT NULL," +
                 TaskEntry.COLUMN_PRIORITY + " INTEGER NOT NULL," +
                 TaskEntry.COLUMN_DATE + " TIMESTAMP NOT NULL," +
+                TaskEntry.COLUMN_CALENDAR + " BOOLEAN DEFAULT 0," +
+                TaskEntry.COLUMN_NOTIFY_TIME + " INTEGER DEFAULT 0," +
                 "FOREIGN KEY(" + TaskEntry.COLUMN_PRIORITY + ") REFERENCES " + PriorityEntry.TABLE_NAME + "(" + PriorityEntry._ID + ")" +
                 ");";
 

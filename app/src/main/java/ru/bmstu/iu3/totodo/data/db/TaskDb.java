@@ -40,10 +40,15 @@ public class TaskDb
         String priority = String.valueOf(getPriorityId(task.getPriority()));
         Date date = task.getDate();
         String formatDate = new SimpleDateFormat(DATE_FORMAT).format(date);
+        boolean addToCalendar = task.isAddedToCalendar();
+        int notifyTime = task.getNotifyTime();
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(TaskEntry.COLUMN_FULL_TEXT, fullText);
         contentValues.put(TaskEntry.COLUMN_PRIORITY, priority);
         contentValues.put(TaskEntry.COLUMN_DATE, formatDate);
+        contentValues.put(TaskEntry.COLUMN_CALENDAR, addToCalendar);
+        contentValues.put(TaskEntry.COLUMN_NOTIFY_TIME, notifyTime);
 
         long row = db.insert(TaskEntry.TABLE_NAME, null, contentValues);
 //        Log.i(TAG, "row added " + row);
@@ -82,12 +87,16 @@ public class TaskDb
         String fullText = task.getText();
         String priority = String.valueOf(getPriorityId(task.getPriority()));
         Date date = task.getDate();
-
         String formatDate = new SimpleDateFormat(DATE_FORMAT).format(date);
+        boolean addToCalendar = task.isAddedToCalendar();
+        int notifyTime = task.getNotifyTime();
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(TaskEntry.COLUMN_FULL_TEXT, fullText);
         contentValues.put(TaskEntry.COLUMN_PRIORITY, priority);
         contentValues.put(TaskEntry.COLUMN_DATE, formatDate);
+        contentValues.put(TaskEntry.COLUMN_CALENDAR, addToCalendar);
+        contentValues.put(TaskEntry.COLUMN_NOTIFY_TIME, notifyTime);
 
         String selection = TaskEntry._ID + " LIKE ?";
         String[] selectionArgs = { String.valueOf(task.getId()) };
@@ -108,6 +117,8 @@ public class TaskDb
                 TaskEntry.TABLE_NAME + "." + TaskEntry._ID,
                 TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_FULL_TEXT,
                 TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_DATE,
+                TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_CALENDAR,
+                TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_NOTIFY_TIME,
                 PriorityEntry.TABLE_NAME + "." + PriorityEntry.COLUMN_PRIORITY
         };
         Cursor cursor = db.query(TaskEntry.TABLE_NAME + " LEFT OUTER JOIN " + PriorityEntry.TABLE_NAME + " ON " + TaskEntry.TABLE_NAME + "." + TaskEntry.COLUMN_PRIORITY + "=" + PriorityEntry.TABLE_NAME + "." + PriorityEntry._ID,
@@ -120,7 +131,10 @@ public class TaskDb
             long id = cursor.getLong(0);
             String text = cursor.getString(1);
             String date = cursor.getString(2);
-            String priority = cursor.getString(3);
+            boolean addToCalendar = cursor.getInt(3) == 1 ? true : false;
+            int notifyTime = cursor.getInt(4);
+            String priority = cursor.getString(5);
+
 //            Log.i(TAG, "1 = " + cursor.getString(1) + " 2 = " + cursor.getString(2));
 //            String priority = cursor.getString(cursor.getColumnIndex())
             Date formatDate = null;
@@ -134,6 +148,8 @@ public class TaskDb
             task.setText(text);
             task.setPriority(priority);
             task.setFullDate(formatDate);
+            task.setAddedToCalendar(addToCalendar);
+            task.setNotifyTime(notifyTime);
             tasks.add(task);
 
 //            Log.i(TAG, "Task " + task.getText() + " " + task.getPriority());

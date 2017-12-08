@@ -8,6 +8,7 @@ import java.util.List;
 
 import ru.bmstu.iu3.totodo.data.db.TaskDb;
 import ru.bmstu.iu3.totodo.data.models.Task;
+import ru.bmstu.iu3.totodo.ui.notification.Notification;
 
 /**
  * Created by Icetroid on 17.11.2017.
@@ -17,10 +18,11 @@ public class CreateTaskPresenterImpl implements CreateTaskPresenter {
     private CreateTaskView createTaskView;
     private Task mTask;
     private TaskDb mTaskDb;
-
+    private Context mContext;
     public CreateTaskPresenterImpl(CreateTaskView createTaskView, Context context){
         this.createTaskView = createTaskView;
         mTaskDb = new TaskDb(context);
+        mContext = context;
         mTask = new Task();
     }
 
@@ -75,6 +77,11 @@ public class CreateTaskPresenterImpl implements CreateTaskPresenter {
     }
 
     @Override
+    public void setNotifyTime(int notifyTimeSec) {
+        mTask.setNotifyTime(notifyTimeSec);
+    }
+
+    @Override
     public void setText(String text) {
         mTask.setText(text);
     }
@@ -87,6 +94,7 @@ public class CreateTaskPresenterImpl implements CreateTaskPresenter {
         if(error == null)
         {
             mTaskDb.insertTask(mTask);
+            Notification.setNotify(mContext, mTask);
             return true;
         }
         else
@@ -165,5 +173,10 @@ public class CreateTaskPresenterImpl implements CreateTaskPresenter {
     @Override
     public Task getTask() {
         return mTask;
+    }
+
+    @Override
+    public void chooseNotifyTime() {
+        createTaskView.showChooseNotifyTimeDialog();
     }
 }

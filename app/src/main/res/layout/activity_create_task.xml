@@ -61,6 +61,17 @@
             />
 
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_cancel_create_task"
+            android:text="@string/btn_cancel_create_task_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <Button
             android:id="@+id/btn_create_task"
             android:layout_width="wrap_content"
@@ -68,5 +79,4 @@
             android:text="@string/btn_create_task_text"
             />
     </LinearLayout>
-
 </LinearLayout>

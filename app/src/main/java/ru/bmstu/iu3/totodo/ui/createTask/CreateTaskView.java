@@ -8,6 +8,7 @@ public interface CreateTaskView {
     void showChoosePriorityDialog();
     void showCalendarDialog();
     void showTimeDialog();
+    void showChooseNotifyTimeDialog();
     String getTaskText();
 
     void showErrorDialog(String error);

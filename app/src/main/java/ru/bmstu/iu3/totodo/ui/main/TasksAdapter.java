@@ -27,16 +27,12 @@ import ru.bmstu.iu3.totodo.data.models.Task;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> {
     private static final String TAG = "TasksAdapter";
-    private static final int MAX_TEXT_LENGTH = 100;
+    private static final int MAX_TEXT_LENGTH = 50;
     private List<Task> tasks;
     private MainSlidePageFragment mMainSlidePageFragment;
     private TasksAdapterListener mTasksAdapterListener;
-    private Context context;
-    private Activity activity;
     public TasksAdapter(MainSlidePageFragment mainSlidePageFragment){
         mTasksAdapterListener = new TasksAdapterListener(mainSlidePageFragment);
-        this.context = context;
-        this.activity = activity;
         this.mMainSlidePageFragment = mainSlidePageFragment;
     }
 
@@ -97,7 +93,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
         public void bind(Task task) {
             this.task = task;
             //tvTitle.setText(task.getId() + " " + task.getText() + " "  + dateFormat.format(task.getDate()) + " " + task.getPriority());
-            tvTitle.setText(getFormattedTaskText());
+            tvTitle.setText(getFormattedTaskText() + " " + task.getNotifyTime() + " " + task.isAddedToCalendar());
             tvDate.setText(dateFormat.format(task.getDate()));
         }
 

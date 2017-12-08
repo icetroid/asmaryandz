@@ -19,7 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="@string/tv_main_priority_default_text"
-        android:layout_centerHorizontal="true"/>
+        android:layout_toLeftOf="@id/tv_main_tasks_stats"
+        android:layout_marginRight="@dimen/default_margin"/>
     <TextView
         android:id="@+id/tv_main_tasks_stats"
         android:layout_width="wrap_content"
