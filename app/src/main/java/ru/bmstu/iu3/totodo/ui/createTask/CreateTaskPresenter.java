@@ -30,4 +30,6 @@ public interface CreateTaskPresenter {
     void setNotifyTime(int notifyTimeSec);
 
     void chooseNotifyTime();
+
+    void chooseSyncCalendar();
 }

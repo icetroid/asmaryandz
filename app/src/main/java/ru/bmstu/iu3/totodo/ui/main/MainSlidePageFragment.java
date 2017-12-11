@@ -2,6 +2,7 @@ package ru.bmstu.iu3.totodo.ui.main;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -102,6 +103,8 @@ public class MainSlidePageFragment extends Fragment
         rvTasks.setHasFixedSize(true);
         tasksAdapter = new TasksAdapter(this);
         rvTasks.setAdapter(tasksAdapter);
+        PreferenceManager.getDefaultSharedPreferences(getContext()).registerOnSharedPreferenceChangeListener(tasksAdapter);
+
 
         db = new TaskDb(getContext());
 
@@ -222,5 +225,49 @@ public class MainSlidePageFragment extends Fragment
         taskState = TASK_STATE_DATE;
         choosenDate = date;
         Log.i(TAG,"settaskdate " + priority + " " + tasks.size());
+    }
+
+
+    public void removeTask(long id) {
+        db.removeTask(id);
+        updateTasks();
+    }
+
+    private void updateTasks()
+    {
+        if(taskType != null)
+        {
+            taskState = taskType;
+        }
+
+        if(taskState == TASK_STATE_TODAY)
+        {
+            setTaskToday();
+        }
+        else if(taskState == TASK_STATE_TOMORROW)
+        {
+            setTaskTomorrow();
+        }
+        else if(taskState == TASK_STATE_THIS_WEEK)
+        {
+            setTaskThisWeek();
+        }
+        else if(taskState == TASK_STATE_DATE)
+        {
+            Log.i(TAG, "TASK STATE DATE " + choosenDate);
+            if(showDate != null)
+            {
+                setTaskDate(showDate);
+            }
+            else if(choosenDate != null)
+            {
+                setTaskDate(choosenDate);
+            }
+
+        }
+        else
+        {
+            setTasks();
+        }
     }
 }

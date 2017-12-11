@@ -1,5 +1,6 @@
 package ru.bmstu.iu3.totodo.ui.createTask;
 
+import android.app.Activity;
 import android.content.Context;
 
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import ru.bmstu.iu3.totodo.data.db.TaskDb;
 import ru.bmstu.iu3.totodo.data.models.Task;
+import ru.bmstu.iu3.totodo.ui.chooseCalendar.ChooseCalendar;
 import ru.bmstu.iu3.totodo.ui.notification.Notification;
 
 /**
@@ -19,11 +21,15 @@ public class CreateTaskPresenterImpl implements CreateTaskPresenter {
     private Task mTask;
     private TaskDb mTaskDb;
     private Context mContext;
-    public CreateTaskPresenterImpl(CreateTaskView createTaskView, Context context){
+    private Activity mActivity;
+    private ChooseCalendar chooseCalendar;
+
+    public CreateTaskPresenterImpl(CreateTaskView createTaskView, Context context, Activity activity){
         this.createTaskView = createTaskView;
         mTaskDb = new TaskDb(context);
         mContext = context;
         mTask = new Task();
+        mActivity = activity;
     }
 
     @Override
@@ -57,6 +63,10 @@ public class CreateTaskPresenterImpl implements CreateTaskPresenter {
         if(error == null)
         {
             mTaskDb.updateTask(mTask);
+            if(chooseCalendar != null)
+            {
+                chooseCalendar.syncTask(mTask);
+            }
             return true;
         }
         else
@@ -95,6 +105,10 @@ public class CreateTaskPresenterImpl implements CreateTaskPresenter {
         {
             mTaskDb.insertTask(mTask);
             Notification.setNotify(mContext, mTask);
+            if(chooseCalendar != null)
+            {
+                chooseCalendar.syncTask(mTask);
+            }
             return true;
         }
         else
@@ -178,5 +192,12 @@ public class CreateTaskPresenterImpl implements CreateTaskPresenter {
     @Override
     public void chooseNotifyTime() {
         createTaskView.showChooseNotifyTimeDialog();
+    }
+
+    @Override
+    public void chooseSyncCalendar() {
+        chooseCalendar = new ChooseCalendar(mActivity, mContext);
+        chooseCalendar.chooseCalendar();
+
     }
 }

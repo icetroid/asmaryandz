@@ -11,9 +11,7 @@
         android:id="@+id/test_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding">
+        android:orientation="vertical">
         <TextView
             android:id="@+id/test_priority_a"
             android:text="@string/test_text_priority_a"
@@ -35,15 +33,20 @@
             style="@style/test_theory"
             android:text="@string/test_text_priority_d"/>
         <include layout="@layout/bottom_line"/>
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/test"/>
         <TextView
-            android:text="@string/test_intro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            style="@style/test_theory"
+            android:id="@+id/test_theory"
+            android:text="@string/test_theory"/>
+        <!--<TextView-->
+            <!--android:text="@string/test_intro"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"/>-->
 
-
+        <!---->
     </LinearLayout>
 </ScrollView>

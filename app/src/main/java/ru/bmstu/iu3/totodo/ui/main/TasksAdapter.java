@@ -2,6 +2,8 @@ package ru.bmstu.iu3.totodo.ui.main;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import org.w3c.dom.Text;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import ru.bmstu.iu3.totodo.R;
 import ru.bmstu.iu3.totodo.data.models.Task;
@@ -25,7 +28,7 @@ import ru.bmstu.iu3.totodo.data.models.Task;
  * Created by Icetroid on 15.11.2017.
  */
 
-public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> {
+public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> implements SharedPreferences.OnSharedPreferenceChangeListener{
     private static final String TAG = "TasksAdapter";
     private static final int MAX_TEXT_LENGTH = 50;
     private List<Task> tasks;
@@ -36,9 +39,15 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
         this.mMainSlidePageFragment = mainSlidePageFragment;
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        this.notifyDataSetChanged();
+    }
+
     public interface onClickListener
     {
         void syncTask(Task task);
+        void removeTask(Task task);
     }
 
 
@@ -61,6 +70,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
     @Override
     public void onBindViewHolder(TaskHolder holder, int position) {
         holder.bind(tasks.get(position));
+        Log.i(TAG, "onbind");
     }
 
     public Task getTask(int position)
@@ -75,11 +85,13 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
     }
 
     public class TaskHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        private DateFormat dateFormatTwentyFour = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        private DateFormat dateFormatTwelve = new SimpleDateFormat("dd/MM/yyyy KK:mm a", Locale.US);
 
         private TextView tvTitle;
         private TextView tvDate;
         private ImageButton btnSyncTask;
+        private ImageButton btnDeleteTask;
         private Task task;
         public TaskHolder(View itemView) {
             super(itemView);
@@ -87,15 +99,38 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
             tvDate = itemView.findViewById(R.id.tv_rv_main_task_date);
             btnSyncTask = itemView.findViewById(R.id.btn_sync_task);
             btnSyncTask.setOnClickListener(this);
+            btnDeleteTask = itemView.findViewById(R.id.btn_delete_task);
+            btnDeleteTask.setOnClickListener(this);
             itemView.findViewById(R.id.rv_task_item).setOnClickListener(this);
+            Log.i(TAG, "con");
         }
+
+
 
         public void bind(Task task) {
             this.task = task;
             //tvTitle.setText(task.getId() + " " + task.getText() + " "  + dateFormat.format(task.getDate()) + " " + task.getPriority());
-            tvTitle.setText(getFormattedTaskText() + " " + task.getNotifyTime() + " " + task.isAddedToCalendar());
-            tvDate.setText(dateFormat.format(task.getDate()));
+            tvTitle.setText(getFormattedTaskText());
+
+            boolean isTwenty = PreferenceManager.getDefaultSharedPreferences(mMainSlidePageFragment.getContext()).getBoolean(mMainSlidePageFragment.getContext().getString(R.string.pref_time_format), true);
+
+            updateDate(isTwenty);
         }
+
+        public void updateDate(boolean isTwentyFour)
+        {
+
+            if(isTwentyFour)
+            {
+                tvDate.setText(dateFormatTwentyFour.format(task.getDate()));
+            }
+            else
+            {
+                tvDate.setText(dateFormatTwelve.format(task.getDate()));
+            }
+
+        }
+
 
         private String getFormattedTaskText()
         {
@@ -118,12 +153,14 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
             int id = view.getId();
             switch(id)
             {
-                case R.id.btn_sync_task:
-                    mTasksAdapterListener.syncTask(task);
+                case R.id.btn_delete_task:
+                    mTasksAdapterListener.removeTask(task);
+                    Log.i(TAG, "delete");
                     break;
                 case R.id.rv_task_item:
                     mMainSlidePageFragment.editTask(task);
                     break;
+
                 default:
                     Log.i(TAG, "no such id");
             }

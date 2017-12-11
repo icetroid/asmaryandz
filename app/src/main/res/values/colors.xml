@@ -5,8 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
 
-    <color name="main_vp_background_color_a">#BDF9DE</color>
-    <color name="main_vp_background_color_b">#DDEEFF</color>
-    <color name="main_vp_background_color_c">#FFFFC1</color>
-    <color name="main_vp_background_color_d">#E0E0E0</color>
+    <color name="main_vp_background_color_a">#dce2e0</color>
+    <color name="main_vp_background_color_b">#d4f1ec</color>
+    <color name="main_vp_background_color_c">#e1f0b5</color>
+    <color name="main_vp_background_color_d">#fcfdb1</color>
 </resources>

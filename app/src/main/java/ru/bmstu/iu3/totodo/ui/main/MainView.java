@@ -26,4 +26,8 @@ public interface MainView
     void showThisWeekTask();
 
     void showDateTask(Date date);
+
+    void showSettings();
+
+    void showAllTasks();
 }

@@ -3,7 +3,7 @@
     <dimen name="main_upper_bar_height">60dp</dimen>
     <dimen name="create_task_btn_height">60dp</dimen>
     <dimen name="default_padding">10dp</dimen>
-    <dimen name="default_margin">16dp</dimen>
+    <dimen name="default_margin">8dp</dimen>
     <dimen name="main_task_item_button_size">30dp</dimen>
     <dimen name="create_task_btn_size">40dp</dimen>
     <dimen name="create_task_btn_margin">10dp</dimen>
@@ -16,4 +16,5 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="default_upper_bar_margin">10dp</dimen>
+    <dimen name="upper_bar_text_size">20sp</dimen>
 </resources>

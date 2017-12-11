@@ -24,4 +24,8 @@ public interface MainPresenter {
 
     void showDateTask();
     Date getShowDate();
+
+    void showSettings();
+
+    void showAllTasks();
 }

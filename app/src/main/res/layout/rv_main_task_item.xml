@@ -40,9 +40,7 @@
     //TODO change back
 
     <ImageButton
-        android:visibility="gone"
         android:id="@+id/btn_delete_task"
-        android:text="@string/btn_sync_task_text"
         style="@style/rv_button"
         android:background="@drawable/ic_delete_task"
         />

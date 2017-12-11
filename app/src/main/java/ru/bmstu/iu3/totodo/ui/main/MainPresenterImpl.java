@@ -72,6 +72,11 @@ public class MainPresenterImpl implements MainPresenter, DatePickerDialog.OnDate
 
     }
 
+    @Override
+    public void showAllTasks() {
+        mainView.showAllTasks();
+    }
+
     private void changeBackgroundVpTasks(int position)
     {
         int color = ArrayUtils.getMainVpBackgroundColor(position, context);
@@ -94,5 +99,10 @@ public class MainPresenterImpl implements MainPresenter, DatePickerDialog.OnDate
     @Override
     public Date getShowDate() {
         return showDate;
+    }
+
+    @Override
+    public void showSettings() {
+        mainView.showSettings();
     }
 }

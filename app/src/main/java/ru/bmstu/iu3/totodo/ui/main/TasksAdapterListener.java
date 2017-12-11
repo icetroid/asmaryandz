@@ -16,8 +16,8 @@ import ru.bmstu.iu3.totodo.ui.chooseCalendar.ChooseCalendar;
 
 public class TasksAdapterListener implements TasksAdapter.onClickListener {
     private static final String TAG = "TasksAdapterListener";
-    private Fragment fragment;
-    public TasksAdapterListener(Fragment fragment)
+    private MainSlidePageFragment fragment;
+    public TasksAdapterListener(MainSlidePageFragment fragment)
     {
 
         this.fragment = fragment;
@@ -25,7 +25,14 @@ public class TasksAdapterListener implements TasksAdapter.onClickListener {
 
     @Override
     public void syncTask(Task task) {
-        ChooseCalendar chooseCalendar = new ChooseCalendar(fragment.getActivity(), fragment.getContext(), task);
+        ChooseCalendar chooseCalendar = new ChooseCalendar(fragment.getActivity(), fragment.getContext());
         chooseCalendar.chooseCalendar();
     }
+
+    @Override
+    public void removeTask(Task task) {
+        fragment.removeTask(task.getId());
+    }
+
+
 }

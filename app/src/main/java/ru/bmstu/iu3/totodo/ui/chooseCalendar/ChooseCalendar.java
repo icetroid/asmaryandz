@@ -26,14 +26,12 @@ public class ChooseCalendar implements DialogInterface.OnClickListener, Compound
     private int calendarId;
     private Activity mActivity;
     private Context mContext;
-    private Task mTask;
     private boolean mRemember;
 
-    public ChooseCalendar(Activity activity, Context context, Task task)
+    public ChooseCalendar(Activity activity, Context context)
     {
         this.mActivity = activity;
         this.mContext = context;
-        this.mTask = task;
         mRemember = false;
         calendarId = -1;
 
@@ -58,13 +56,13 @@ public class ChooseCalendar implements DialogInterface.OnClickListener, Compound
             else
             {
                 calendarId = id;
-                syncTask();
+                //syncTask();
             }
         }
 
     }
 
-    private void syncTask() {
+    public void syncTask(Task task) {
         if(mRemember && calendarId != -1)
         {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -76,7 +74,7 @@ public class ChooseCalendar implements DialogInterface.OnClickListener, Compound
 
         if(calendarId != -1)
         {
-            CalendarUtils.insertTaskIntoCalendar(mContext, mActivity, mTask, calendarId);
+            CalendarUtils.insertTaskIntoCalendar(mContext, mActivity, task, calendarId);
         }
     }
 
@@ -102,7 +100,7 @@ public class ChooseCalendar implements DialogInterface.OnClickListener, Compound
     public void onClick(DialogInterface dialogInterface, int button) {
         if(button == DialogInterface.BUTTON_POSITIVE)
         {
-            syncTask();
+            //syncTask();
         }
         else if(button == DialogInterface.BUTTON_NEGATIVE)
         {

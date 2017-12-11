@@ -27,6 +27,7 @@ import ru.bmstu.iu3.totodo.data.db.TaskDb;
 import ru.bmstu.iu3.totodo.data.models.Task;
 import ru.bmstu.iu3.totodo.ui.createTask.CreateTaskFragment;
 import ru.bmstu.iu3.totodo.ui.notification.Notification;
+import ru.bmstu.iu3.totodo.ui.settings.SettingsActivity;
 import ru.bmstu.iu3.totodo.ui.test.Test;
 
 public class MainActivity extends AppCompatActivity implements TaskEditor, MainView, NavigationView.OnNavigationItemSelectedListener, CreateTaskInterface{
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
 
     private Button btnCreateTask;
     private TextView tvPriority;
-    private TextView tvStats;
 
 
 
@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
 
         //инициализация text view
         tvPriority = findViewById(R.id.tv_main_priority);
-        tvStats = findViewById(R.id.tv_main_tasks_stats);
 
 
         //инициализация view pager и pager adapter
@@ -203,6 +202,12 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
             case R.id.nav_choose_date:
                 presenter.showDateTask();
                 break;
+            case R.id.nav_all:
+                presenter.showAllTasks();
+                break;
+            case R.id.nav_settings:
+                presenter.showSettings();
+                break;
 //            case R.id.nav_about:
 //                Notification notification = new Notification(this);
 //                notification.setNotify();
@@ -215,6 +220,11 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
         return true;
     }
 
+    @Override
+    public void showSettings() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public void showDateTask(Date date) {
@@ -228,6 +238,21 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
             {
                 MainSlidePageFragment mainSlidePageFragment = (MainSlidePageFragment) fragment;
                 mainSlidePageFragment.setTaskDate(date);
+                vpTasks.getAdapter().notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    public void showAllTasks() {
+        tasksPagerAdapter.setTaskType(MainSlidePageFragment.TASK_STATE_ALL);
+        for(Task.Priority priority : Task.Priority.values())
+        {
+            Fragment fragment = tasksPagerAdapter.getRegisteredFragment(priority.getPriority());
+            if (fragment instanceof MainSlidePageFragment)
+            {
+                MainSlidePageFragment mainSlidePageFragment = (MainSlidePageFragment) fragment;
+                mainSlidePageFragment.update();
                 vpTasks.getAdapter().notifyDataSetChanged();
             }
         }
@@ -295,9 +320,11 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
     @Override
     public void editTask(Task task)
     {
-        CreateTaskFragment editTaskFragment = CreateTaskFragment.getInstanceEditTask(task);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.create_task_fragment, editTaskFragment).commit();
+        if (findViewById(R.id.create_task_fragment) != null) {
+            CreateTaskFragment editTaskFragment = CreateTaskFragment.getInstanceEditTask(task);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.create_task_fragment, editTaskFragment).commit();
+        }
     }
 
     private class CreateTaskListener implements View.OnClickListener

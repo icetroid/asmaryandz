@@ -12,21 +12,18 @@
         android:layout_height="@dimen/option_bar_button_size"
         android:background="@drawable/ic_option_bar_button"
         android:layout_alignParentLeft="true"
-        android:layout_margin="@dimen/default_upper_bar_margin"/>
+        android:layout_margin="@dimen/default_upper_bar_margin"
+        android:textAlignment="center"/>
 
     <TextView
         android:id="@+id/tv_main_priority"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/tv_main_priority_default_text"
-        android:layout_toLeftOf="@id/tv_main_tasks_stats"
-        android:layout_marginRight="@dimen/default_margin"/>
-    <TextView
-        android:id="@+id/tv_main_tasks_stats"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="@string/tv_main_tasks_stats_default_text"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:textSize="@dimen/upper_bar_text_size"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_main_tasks"

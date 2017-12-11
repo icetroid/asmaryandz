@@ -457,4 +457,12 @@ public class TaskDb
         }
         return false;
     }
+
+    public void removeTask(long id) {
+        String selection = TaskEntry._ID + " LIKE ?";
+// Specify arguments in placeholder order.
+        String[] selectionArgs = { String.valueOf(id) };
+// Issue SQL statement.
+        db.delete(TaskEntry.TABLE_NAME, selection, selectionArgs);
+    }
 }

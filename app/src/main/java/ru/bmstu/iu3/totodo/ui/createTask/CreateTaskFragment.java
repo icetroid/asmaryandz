@@ -44,13 +44,13 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
     private CreateTaskPresenter presenter;
 
     private SetTaskPropertiesListener mSetTaskPropertiesListener = new SetTaskPropertiesListener();
-    private SetTaskPropertyLongListener mSetTaskPropertyLongListener = new SetTaskPropertyLongListener();
     private DateTimePickListener mDateTimePickListener;
 
     private ImageButton btnSetPriority;
     private ImageButton btnSetDate;
     private ImageButton btnSetTime;
     private ImageButton btnSetNotifyTime;
+    private ImageButton btnSetCalendar;
 
     private CreateTaskInterface mCreateTaskInterface;
 
@@ -92,24 +92,26 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.activity_create_task, container, false);
 
-        presenter = new CreateTaskPresenterImpl(this, getContext());
+        presenter = new CreateTaskPresenterImpl(this, getContext(), getActivity());
 
         btnSetPriority = view.findViewById(R.id.btn_set_task_priority);
         btnSetPriority.setOnClickListener(mSetTaskPropertiesListener);
-        btnSetPriority.setOnLongClickListener(mSetTaskPropertyLongListener);
 
         btnSetDate = view.findViewById(R.id.btn_set_task_date);
         btnSetDate.setOnClickListener(mSetTaskPropertiesListener);
-        btnSetDate.setOnLongClickListener(mSetTaskPropertyLongListener);
 
         btnSetTime = view.findViewById(R.id.btn_set_task_time);
         btnSetTime.setOnClickListener(mSetTaskPropertiesListener);
-        btnSetTime.setOnLongClickListener(mSetTaskPropertyLongListener);
 
         mDateTimePickListener = new DateTimePickListener(presenter);
 
+        btnSetCalendar = view.findViewById(R.id.btn_set_sync_calendar);
+        btnSetCalendar.setOnClickListener(mSetTaskPropertiesListener);
+
         btnSetNotifyTime = view.findViewById(R.id.btn_set_notify);
         btnSetNotifyTime.setOnClickListener(mSetTaskPropertiesListener);
+
+
 
         //Todo delete this button
         btnCreateTask = view.findViewById(R.id.btn_create_task);
@@ -119,6 +121,7 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
                 createTask(view);
             }
         });
+
 
         btnCancelTask = view.findViewById(R.id.btn_cancel_create_task);
         btnCancelTask.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +141,8 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
             if(args.getBoolean(KEY_UPDATE_TASK))
             {
                 updateTask = true;
+
+                btnSetNotifyTime.setVisibility(View.INVISIBLE);
 
                 long id = args.getLong(KEY_TASK_ID);
                 String text = args.getString(KEY_TASK_TEXT);
@@ -203,7 +208,11 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
     @Override
     public void showCalendarDialog()
     {
-        Calendar dateAndTime = Calendar.getInstance();
+        Calendar dateAndTime = Calendar.getInstance();;
+        if(presenter.getTask().getDate() != null)
+        {
+            dateAndTime.setTime(presenter.getTask().getDate());
+        }
         new DatePickerDialog(getContext(), mDateTimePickListener,
                 dateAndTime.get(Calendar.YEAR),
                 dateAndTime.get(Calendar.MONTH),
@@ -213,7 +222,11 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
     @Override
     public void showTimeDialog()
     {
-        Calendar dateAndTime = Calendar.getInstance();
+        Calendar dateAndTime = Calendar.getInstance();;
+        if(presenter.getTask().getDate() != null)
+        {
+            dateAndTime.setTime(presenter.getTask().getDate());
+        }
         new TimePickerDialog(getContext(), mDateTimePickListener,
                 dateAndTime.get(Calendar.HOUR_OF_DAY),
                 dateAndTime.get(Calendar.MINUTE), true)
@@ -232,32 +245,6 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
 
 
     /**
-     * Слушает удерживание кнопок
-     */
-    private class SetTaskPropertyLongListener implements View.OnLongClickListener{
-
-        @Override
-        public boolean onLongClick(View view) {
-            switch(view.getId())
-            {
-                case R.id.btn_set_task_priority:
-//                    Log.i(TAG, "Set priority button long clicked");
-                    presenter.choosePriority();
-                    break;
-                case R.id.btn_set_task_date:
-                    presenter.chooseDate();
-                    break;
-                case R.id.btn_set_task_time:
-                    break;
-            }
-
-            return true;
-        }
-    }
-
-
-
-    /**
      * Слушает одно нажатие на кнопку
      */
     private class SetTaskPropertiesListener implements View.OnClickListener{
@@ -267,16 +254,20 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
             switch(view.getId())
             {
                 case R.id.btn_set_task_priority:
-                    presenter.setHighestPriority();
+                    presenter.choosePriority();
                     break;
                 case R.id.btn_set_task_date:
-                    presenter.setCurrentDate();
+                    presenter.chooseDate();
                     break;
                 case R.id.btn_set_task_time:
                     presenter.chooseTime();
                     break;
+                case R.id.btn_set_sync_calendar:
+                    presenter.chooseSyncCalendar();
+                    break;
                 case R.id.btn_set_notify:
                     presenter.chooseNotifyTime();
+                    break;
             }
         }
     }

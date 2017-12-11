@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:key="@string/pref_time_format"
+        android:title="@string/pref_time_format_title"
+        android:summaryOff="@string/twelve_format"
+        android:summaryOn="@string/twenty_four_format"
+        android:defaultValue="true"/>
+
+    <SwitchPreferenceCompat
+        android:key="@string/pref_ask_for_calendar_id_key"
+        android:title="@string/pref_ask_for_calendar_id_key_title"
+        android:summaryOff="@string/pref_ask_for_calendar_id_key_title_off"
+        android:summaryOn="@string/pref_ask_for_calendar_id_key_title_on"
+        android:defaultValue="true"/>
+</PreferenceScreen>

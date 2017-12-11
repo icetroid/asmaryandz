@@ -5,6 +5,9 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_all"
+            android:title="@string/navigation_all"/>
+        <item
             android:id="@+id/nav_today"
             android:title="@string/navigation_today"/>
         <item
