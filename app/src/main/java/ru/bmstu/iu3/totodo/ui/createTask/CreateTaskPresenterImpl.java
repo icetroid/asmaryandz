@@ -30,6 +30,7 @@ public class CreateTaskPresenterImpl implements CreateTaskPresenter {
         mContext = context;
         mTask = new Task();
         mActivity = activity;
+
     }
 
     @Override

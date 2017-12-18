@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@drawable/task_item_background"
     android:padding="@dimen/default_padding"
+    android:background="@drawable/task_item_background"
     android:id="@+id/rv_task_item"
     >
     <LinearLayout
@@ -17,15 +17,14 @@
         <TextView
             android:id="@+id/tv_rv_main_task_date"
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+
           />
 
         <TextView
             android:id="@+id/tv_rv_main_task_title"
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
       />
     </LinearLayout>
 
@@ -44,6 +43,7 @@
         style="@style/rv_button"
         android:background="@drawable/ic_delete_task"
         />
+
     <!--<ImageButton-->
         <!--android:id="@+id/btn_detailed_task"-->
         <!--style="@style/rv_button"-->

@@ -4,9 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-
-    <color name="main_vp_background_color_a">#dce2e0</color>
-    <color name="main_vp_background_color_b">#d4f1ec</color>
-    <color name="main_vp_background_color_c">#e1f0b5</color>
-    <color name="main_vp_background_color_d">#fcfdb1</color>
+    <color name="main_vp_background_color_a">#e1f0b5</color>
+    <color name="main_vp_background_color_b">#fcfdb1</color>
+    <color name="main_vp_background_color_c">#d4f1ec</color>
+    <color name="main_vp_background_color_d">#dce2e0</color>
+    <color name="rv_task">#80FFFFFF</color>
 </resources>

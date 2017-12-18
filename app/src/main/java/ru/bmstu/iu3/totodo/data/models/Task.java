@@ -55,8 +55,8 @@ public class Task
     {
         id = -1;
         text = null;
-        priority = null;
-        dateSet = false;
+        priority = Priority.A;
+        dateSet = true;
         timeSet = false;
         date = new Date();
         notifyTime = 0;

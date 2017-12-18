@@ -21,6 +21,9 @@
             android:id="@+id/test_priority_b"
             android:text="@string/test_text_priority_b"
             style="@style/test_theory"/>
+
+
+
         <include layout="@layout/bottom_line"/>
         <TextView
             android:id="@+id/test_priority_c"
@@ -35,9 +38,12 @@
         <include layout="@layout/bottom_line"/>
 
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:src="@drawable/test"/>
+
         <TextView
             style="@style/test_theory"
             android:id="@+id/test_theory"
