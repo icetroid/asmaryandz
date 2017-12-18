@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
+import ru.bmstu.iu3.totodo.R;
 import ru.bmstu.iu3.totodo.data.models.Task;
 
 import static android.provider.CalendarContract.*;
@@ -69,8 +70,11 @@ public class CalendarUtils
             displayName = cursor.getString(PROJECTION_DISPLAY_NAME_INDEX);
             accountName = cursor.getString(PROJECTION_ACCOUNT_NAME_INDEX);
             ownerName = cursor.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
+            if(displayName.contains("@"))
+            {
+                calendars.put(calID, displayName + "/" + accountName);
 
-            calendars.put(calID, displayName + "/" + accountName);
+            }
         }
         return calendars;
     }
@@ -128,7 +132,7 @@ public class CalendarUtils
         values.put(Events.DTSTART, startMillis);
         //values.put(Events.DTEND, endMillis);
         //TODO Change event title
-        values.put(Events.TITLE, "Totodo");
+        values.put(Events.TITLE, context.getString(R.string.app_name));
         values.put(Events.DESCRIPTION, description);
         values.put(Events.CALENDAR_ID, calendarId);
         values.put(Events.EVENT_TIMEZONE, timezone);

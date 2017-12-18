@@ -24,12 +24,6 @@ public class TasksAdapterListener implements TasksAdapter.onClickListener {
     }
 
     @Override
-    public void syncTask(Task task) {
-        ChooseCalendar chooseCalendar = new ChooseCalendar(fragment.getActivity(), fragment.getContext());
-        chooseCalendar.chooseCalendar();
-    }
-
-    @Override
     public void removeTask(Task task) {
         fragment.removeTask(task.getId());
     }

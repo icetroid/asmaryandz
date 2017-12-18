@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -27,14 +26,20 @@ public class ChooseCalendar implements DialogInterface.OnClickListener, Compound
     private Activity mActivity;
     private Context mContext;
     private boolean mRemember;
-
-    public ChooseCalendar(Activity activity, Context context)
+    private boolean sync;
+    private ChooseCalendarListener mChooseCalendarListener;
+    public ChooseCalendar(Activity activity, Context context, ChooseCalendarListener chooseCalendarListener)
     {
         this.mActivity = activity;
         this.mContext = context;
         mRemember = false;
         calendarId = -1;
+        mChooseCalendarListener = chooseCalendarListener;
+    }
 
+    public boolean getSync()
+    {
+        return sync;
     }
 
     public void chooseCalendar()
@@ -63,19 +68,23 @@ public class ChooseCalendar implements DialogInterface.OnClickListener, Compound
     }
 
     public void syncTask(Task task) {
-        if(mRemember && calendarId != -1)
+        if(sync)
         {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(mActivity.getString(R.string.pref_ask_for_calendar_id_key), false);
-            editor.putInt(mActivity.getString(R.string.pref_calendar_id), calendarId);
-            editor.apply();
+            if(mRemember && calendarId != -1)
+            {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean(mActivity.getString(R.string.pref_ask_for_calendar_id_key), false);
+                editor.putInt(mActivity.getString(R.string.pref_calendar_id), calendarId);
+                editor.apply();
+            }
+
+            if(calendarId != -1)
+            {
+                CalendarUtils.insertTaskIntoCalendar(mContext, mActivity, task, calendarId);
+            }
         }
 
-        if(calendarId != -1)
-        {
-            CalendarUtils.insertTaskIntoCalendar(mContext, mActivity, task, calendarId);
-        }
     }
 
     private void showChooseCalendarIdDialog()
@@ -100,12 +109,15 @@ public class ChooseCalendar implements DialogInterface.OnClickListener, Compound
     public void onClick(DialogInterface dialogInterface, int button) {
         if(button == DialogInterface.BUTTON_POSITIVE)
         {
-            //syncTask();
+            sync = true;
+            mChooseCalendarListener.syncCalendarChanged(true);
         }
         else if(button == DialogInterface.BUTTON_NEGATIVE)
         {
             calendarId = -1;
             mRemember = false;
+            sync = false;
+            mChooseCalendarListener.syncCalendarChanged(false);
         }
     }
 }

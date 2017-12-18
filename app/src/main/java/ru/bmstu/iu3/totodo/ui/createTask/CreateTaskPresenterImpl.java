@@ -10,13 +10,14 @@ import java.util.List;
 import ru.bmstu.iu3.totodo.data.db.TaskDb;
 import ru.bmstu.iu3.totodo.data.models.Task;
 import ru.bmstu.iu3.totodo.ui.chooseCalendar.ChooseCalendar;
+import ru.bmstu.iu3.totodo.ui.chooseCalendar.ChooseCalendarListener;
 import ru.bmstu.iu3.totodo.ui.notification.Notification;
 
 /**
  * Created by Icetroid on 17.11.2017.
  */
 
-public class CreateTaskPresenterImpl implements CreateTaskPresenter {
+public class CreateTaskPresenterImpl implements CreateTaskPresenter, ChooseCalendarListener{
     private CreateTaskView createTaskView;
     private Task mTask;
     private TaskDb mTaskDb;
@@ -90,6 +91,14 @@ public class CreateTaskPresenterImpl implements CreateTaskPresenter {
     @Override
     public void setNotifyTime(int notifyTimeSec) {
         mTask.setNotifyTime(notifyTimeSec);
+        if(notifyTimeSec == 0)
+        {
+            createTaskView.setNotifyIconOff();
+        }
+        else
+        {
+            createTaskView.setNotifyIconOn();
+        }
     }
 
     @Override
@@ -197,8 +206,23 @@ public class CreateTaskPresenterImpl implements CreateTaskPresenter {
 
     @Override
     public void chooseSyncCalendar() {
-        chooseCalendar = new ChooseCalendar(mActivity, mContext);
+        chooseCalendar = new ChooseCalendar(mActivity, mContext, this);
         chooseCalendar.chooseCalendar();
 
+    }
+
+
+
+
+    @Override
+    public void syncCalendarChanged(boolean button) {
+        if(button)
+        {
+            createTaskView.setSyncIconOn();
+        }
+        else
+        {
+            createTaskView.setSyncIconOff();
+        }
     }
 }

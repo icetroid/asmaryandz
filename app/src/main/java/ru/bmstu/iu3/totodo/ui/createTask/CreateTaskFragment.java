@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,8 +33,6 @@ import ru.bmstu.iu3.totodo.utils.DialogUtils;
 
 public class CreateTaskFragment extends Fragment implements CreateTaskView
 {
-
-
     private static final String TAG = "CreateTaskActivity";
     private static final String KEY_TASK_ID = "taskId";
     private static final String KEY_UPDATE_TASK = "updateTask";
@@ -90,8 +89,8 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.activity_create_task, container, false);
 
+        View view =  inflater.inflate(R.layout.activity_create_task, container, false);
         presenter = new CreateTaskPresenterImpl(this, getContext(), getActivity());
 
         btnSetPriority = view.findViewById(R.id.btn_set_task_priority);
@@ -132,7 +131,6 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
         });
 
         etTaskText = view.findViewById(R.id.et_task_text);
-
 
         Bundle args = getArguments();
 
@@ -182,6 +180,15 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
             mCreateTaskInterface.taskCreated(presenter.getTask().getPriority());
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
         }
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getActivity().getWindow().getCurrentFocus().getWindowToken(), 0);
+
     }
 
 
@@ -241,6 +248,27 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
     @Override
     public void showErrorDialog(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void setSyncIconOn() {
+        btnSetCalendar.setImageResource(R.drawable.ic_choose_sync_calendar_on);
+    }
+
+    @Override
+    public void setSyncIconOff() {
+        btnSetCalendar.setImageResource(R.drawable.ic_choose_sync_calendar_off);
+
+    }
+
+    @Override
+    public void setNotifyIconOn() {
+        btnSetNotifyTime.setImageResource(R.drawable.ic_choose_notify_on);
+    }
+
+    @Override
+    public void setNotifyIconOff() {
+        btnSetNotifyTime.setImageResource(R.drawable.ic_choose_notify_off);
     }
 
 

@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
 
     private static final String TAG = "MainActivity";
     private static final Task.Priority INITIAL_PAGE_PRIORITY = Task.Priority.A;
+    private static final String CREATE_FRAGMENT_TAG = "createFragment";
     private MainPresenter presenter;
 
     //Todo Navigation bar
@@ -126,10 +127,13 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
     @Override
     public void openCreateTaskActivity()
     {
+//        Fragment createFragment = getSupportFragmentManager().findFragmentByTag(CREATE_FRAGMENT_TAG);
+        Fragment createFragment = getSupportFragmentManager().findFragmentById(R.id.create_task_fragment);
         //TODO change back
         //Intent intent = new Intent(MainActivity.this, CreateTaskActivity.class);
         //startActivity(intent);
-        if (findViewById(R.id.create_task_fragment) != null) {
+        if (findViewById(R.id.create_task_fragment) != null && createFragment == null) {
+            Log.i(TAG, "opencreatetaskactivity" + (createFragment == null));
 
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
@@ -146,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
 
             // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.create_task_fragment, firstFragment).commit();
+                    .add(R.id.create_task_fragment, firstFragment, CREATE_FRAGMENT_TAG).commit();
         }
 
 //        Log.i(TAG, "create task");
@@ -320,7 +324,8 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
     @Override
     public void editTask(Task task)
     {
-        if (findViewById(R.id.create_task_fragment) != null) {
+        Fragment updateFragment = getSupportFragmentManager().findFragmentById(R.id.create_task_fragment);
+        if (findViewById(R.id.create_task_fragment) != null && updateFragment == null) {
             CreateTaskFragment editTaskFragment = CreateTaskFragment.getInstanceEditTask(task);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.create_task_fragment, editTaskFragment).commit();

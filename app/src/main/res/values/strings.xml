@@ -54,7 +54,7 @@
     <string name="twelve_format">12-часовой формат</string>
     <string name="twenty_four_format">24-часовой формат</string>
     <string name="navigation_all">Все</string>
-    <string name="pref_ask_for_calendar_id_key_title">Спрашивать календарь</string>
+    <string name="pref_ask_for_calendar_id_key_title">Выбор календаря</string>
     <string name="pref_ask_for_calendar_id_key_title_off">Нет</string>
     <string name="pref_ask_for_calendar_id_key_title_on">Да</string>
     <string name="test_theory">Используйте следующие критерии важности, задавая вопросы к каждому делу: \nВыполнение этой задачи необходимо для достижения моей ключевой цели (Да – значит, важно; Нет – неважно). \nНевыполнение дела влечет за собой серьезные последствия для текущей деятельности (Да – важно; Нет – неважно). \nКритерий срочности: \nЕсли задачу не выполнить сейчас, то она теряет свою актуальность (Да – срочная; Нет – несрочная).</string>

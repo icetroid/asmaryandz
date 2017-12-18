@@ -12,4 +12,10 @@ public interface CreateTaskView {
     String getTaskText();
 
     void showErrorDialog(String error);
+
+    void setSyncIconOn();
+    void setSyncIconOff();
+
+    void setNotifyIconOn();
+    void setNotifyIconOff();
 }
