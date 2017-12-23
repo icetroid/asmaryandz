@@ -69,17 +69,6 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskHolder> 
     @Override
     public void onBindViewHolder(TaskHolder holder, int position) {
         holder.bind(tasks.get(position));
-//        if(position >= getItemCount())
-//        {
-//            //holder.itemView.findViewById(R.id.rv_task_item).setBackgroundResource(R.drawable.task_item_background_none);
-//            Log.i(TAG, "none " + position);
-//        }
-//        else
-//        {
-//            //holder.itemView.findViewById(R.id.rv_task_item).setBackgroundResource(R.drawable.task_item_background);
-//            Log.i(TAG, "background " + position);
-//        }
-
     }
 
     public Task getTask(int position)

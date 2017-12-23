@@ -58,7 +58,6 @@ public class CreateTaskPresenterImpl implements CreateTaskPresenter, ChooseCalen
 
     @Override
     public boolean updateTask() {
-        //TODO if priority is changed changed, task doesn't change location
         String taskText = createTaskView.getTaskText();
         mTask.setText(taskText);
         String error = validateTask();
@@ -127,8 +126,6 @@ public class CreateTaskPresenterImpl implements CreateTaskPresenter, ChooseCalen
             return false;
         }
     }
-
-    //TODO validate task
     private String validateTask()
     {
         List<String> emptyFields = new LinkedList<>();

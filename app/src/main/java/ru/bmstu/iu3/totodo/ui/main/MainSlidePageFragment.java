@@ -108,10 +108,6 @@ public class MainSlidePageFragment extends Fragment
 
         db = new TaskDb(getContext());
 
-        //TODO change data
-//        setTasks(FakeDataUtils.getTasks(100));
-//        FakeDataUtils.insertTasksIntoDb(getContext(), 100);
-//           db.deleteAllTasks();
         Log.i(TAG, "taskState "+ taskState);
 
         if(savedInstanceState != null && savedInstanceState.containsKey(KEY_TASK_STATE))

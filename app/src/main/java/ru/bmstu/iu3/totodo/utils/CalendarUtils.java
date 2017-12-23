@@ -79,41 +79,6 @@ public class CalendarUtils
         return calendars;
     }
 
-    //TODO do not use this
-    public static void test(Context context, Activity activity)
-    {
-        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.READ_CALENDAR ) != PackageManager.PERMISSION_GRANTED )
-        {
-            ActivityCompat.requestPermissions(activity, new String[] {android.Manifest.permission.READ_CALENDAR}, MY_PERMISSION_ACCESS_CALENDAR_READ );
-        }
-        ContentResolver contentResolver = activity.getContentResolver();
-        Uri uri = Calendars.CONTENT_URI;
-        String selection = "((" + Calendars.ACCOUNT_NAME + " = ?) AND ("
-                + Calendars.ACCOUNT_TYPE + " = ?) AND ("
-                + Calendars.OWNER_ACCOUNT + " = ?))";
-        Cursor cursor = contentResolver.query(uri, EVENT_PROJECTION, null, null, null);
-
-
-        while (cursor.moveToNext()) {
-            long calID = 0;
-            String displayName = null;
-            String accountName = null;
-            String ownerName = null;
-
-            // Get the field values
-            calID = cursor.getLong(PROJECTION_ID_INDEX);
-            displayName = cursor.getString(PROJECTION_DISPLAY_NAME_INDEX);
-            accountName = cursor.getString(PROJECTION_ACCOUNT_NAME_INDEX);
-            ownerName = cursor.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
-
-
-
-        }
-
-
-    }
-
-
 
     public static long insertTaskIntoCalendar(Context context, Activity activity, Task task, long calendarId)
     {
@@ -131,7 +96,6 @@ public class CalendarUtils
         ContentValues values = new ContentValues();
         values.put(Events.DTSTART, startMillis);
         //values.put(Events.DTEND, endMillis);
-        //TODO Change event title
         values.put(Events.TITLE, context.getString(R.string.app_name));
         values.put(Events.DESCRIPTION, description);
         values.put(Events.CALENDAR_ID, calendarId);

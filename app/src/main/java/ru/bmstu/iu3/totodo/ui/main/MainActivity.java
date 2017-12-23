@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
     private static final String CREATE_FRAGMENT_TAG = "createFragment";
     private MainPresenter presenter;
 
-    //Todo Navigation bar
     private ImageButton btnNavigationOpen;
     private DrawerLayout drawer;
 
@@ -61,9 +60,6 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
 
         mNagivationButtonListener = new NavigationButtonListener(presenter);
 
-        //TODO navigation bar
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
 
         btnNavigationOpen = findViewById(R.id.toolbar);
@@ -127,28 +123,11 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
     @Override
     public void openCreateTaskActivity()
     {
-//        Fragment createFragment = getSupportFragmentManager().findFragmentByTag(CREATE_FRAGMENT_TAG);
         Fragment createFragment = getSupportFragmentManager().findFragmentById(R.id.create_task_fragment);
-        //TODO change back
-        //Intent intent = new Intent(MainActivity.this, CreateTaskActivity.class);
-        //startActivity(intent);
+
         if (findViewById(R.id.create_task_fragment) != null && createFragment == null) {
             Log.i(TAG, "opencreatetaskactivity" + (createFragment == null));
-
-            // However, if we're being restored from a previous state,
-            // then we don't need to do anything and should return or else
-            // we could end up with overlapping fragments.
-//            if (savedInstanceState != null) {
-//                return;
-//            }
-
-            // Create a new Fragment to be placed in the activity layout
             CreateTaskFragment firstFragment = new CreateTaskFragment();
-
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-
-            // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.create_task_fragment, firstFragment, CREATE_FRAGMENT_TAG).commit();
         }
@@ -163,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
     @Override
     public void onSwipeTasks(int position)
     {
-        //TODO implements on swipe tasks
         presenter.onSwipeTasks(position);
     }
 
@@ -182,8 +160,6 @@ public class MainActivity extends AppCompatActivity implements TaskEditor, MainV
     public void openNagivation() {
         drawer.openDrawer(Gravity.START);
     }
-
-    //TODO change nagivation
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.

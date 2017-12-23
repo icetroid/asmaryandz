@@ -110,9 +110,6 @@ public class CreateTaskFragment extends Fragment implements CreateTaskView
         btnSetNotifyTime = view.findViewById(R.id.btn_set_notify);
         btnSetNotifyTime.setOnClickListener(mSetTaskPropertiesListener);
 
-
-
-        //Todo delete this button
         btnCreateTask = view.findViewById(R.id.btn_create_task);
         btnCreateTask.setOnClickListener(new View.OnClickListener() {
             @Override
